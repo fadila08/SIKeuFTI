@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Account_group extends Model
 {
-    protected $table = 'services';
+    protected $table = 'account_groups';
     protected $fillable = [
-	  'service_name'
+	  'group_name'
     ];
 }

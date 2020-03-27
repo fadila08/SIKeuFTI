@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCoasTable extends Migration
+class CreateNormalBalancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateCoasTable extends Migration
      */
     public function up()
     {
-        Schema::create('coas', function (Blueprint $table) {
+        Schema::create('normal_balances', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('normal_balance');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateCoasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coas');
+        Schema::dropIfExists('normal_balances');
     }
 }

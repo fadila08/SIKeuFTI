@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Coa extends Model
+class Project extends Model
 {
-    protected $table = 'coas';
+    protected $table = 'projects';
     protected $guarded = array('id');
 }

@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Normal_balance extends Model
 {
-    protected $table = 'services';
+    protected $table = 'normal_balances';
     protected $fillable = [
-	  'service_name'
+	  'normal_balance'
     ];
 }
