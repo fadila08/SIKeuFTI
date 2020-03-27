@@ -3,6 +3,8 @@
 @section('content')
     @include('layouts.headers.cards')
     
+    <!-- JS Chart ada di public/argon/js/argon.js -->
+
     <div class="container-fluid mt--7">
         <!-- kolom pertama -->
         <div class="row">
@@ -215,13 +217,13 @@
                             </div>
                             <div class="col">
                                 <ul class="nav nav-pills justify-content-end">
-                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
+                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#cash-flow" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
                                         <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
                                             <span class="d-none d-md-block">Month</span>
                                             <span class="d-md-none">M</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
+                                    <li class="nav-item" data-toggle="chart" data-target="#cash-flow" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
                                         <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
                                             <span class="d-none d-md-block">Week</span>
                                             <span class="d-md-none">W</span>
@@ -235,15 +237,12 @@
                         <!-- Chart -->
                         <div class="chart">
                             <!-- Chart wrapper -->
-                            <canvas id="chart-sales" class="chart-canvas"></canvas>
+                            <canvas id="cash-flow" class="chart-canvas"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        {{-- Note buat dili by Adit keren :v
-        Canvas id tidak boleh sama, jadi rubah namanya, dan juga tambahkan function sesuai nama yg dirubah di file public\argon\js\argon.js --}}
 
         <!-- kolom keempat -->
         <div class="row mt-5">
@@ -298,7 +297,7 @@
                     <div class="card-body">
                         <!-- Chart -->
                         <div class="chart">
-                            <canvas id="chart-orders" class="chart-canvas"></canvas>
+                            <canvas id="chart-projects" class="chart-canvas"></canvas>
                         </div>
                     </div>
                 </div>
@@ -418,7 +417,7 @@
                     <div class="card-body">
                         <!-- Chart -->
                         <div class="chart">
-                            <canvas id="chart-orders" class="chart-canvas"></canvas>
+                            <canvas id="chart-projectsRevenue" class="chart-canvas"></canvas>
                         </div>
                     </div>
                 </div>
