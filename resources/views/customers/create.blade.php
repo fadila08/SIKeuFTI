@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('cust_email') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-cust-email">{{ __('Email') }}</label>
-                                    <input type="cust_email" name="cust_email" id="input-cust-email" class="form-control form-control-alternative{{ $errors->has('cust_email') ? ' is-invalid' : '' }}" placeholder="{{ __('Customer Email Address') }}" value="{{ old('cust_email') }}" required>
+                                    <input type="email" name="cust_email" id="input-cust-email" class="form-control form-control-alternative{{ $errors->has('cust_email') ? ' is-invalid' : '' }}" placeholder="{{ __('Customer Email Address') }}" value="{{ old('cust_email') }}" required>
 
                                     @if ($errors->has('cust_email'))
                                         <span class="invalid-feedback" role="alert">
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('cust_phone') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-cust-phone">{{ __('Phone Number') }}</label>
-                                    <input type="cust_phone" name="cust_phone" id="input-cust-phone" class="form-control form-control-alternative{{ $errors->has('cust_phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Customer Phone Number') }}" value="{{ old('cust_phone') }}" required>
+                                    <input type="phone" name="cust_phone" id="input-cust-phone" class="form-control form-control-alternative{{ $errors->has('cust_phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Customer Phone Number') }}" value="{{ old('cust_phone') }}" required>
 
                                     @if ($errors->has('cust_phone'))
                                         <span class="invalid-feedback" role="alert">

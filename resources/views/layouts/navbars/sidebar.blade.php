@@ -101,7 +101,7 @@
                     </a>                
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
+                    <a class="nav-link" href="{{ route('cred.index') }}">
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Kreditur') }}
                     </a>                
                 </li>
