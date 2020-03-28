@@ -30,5 +30,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('cust', 'CustomerController', ['except' => ['show']]);
 	//management kreditur
 	Route::resource('cred', 'CreditorController', ['except' => ['show']]);
+	//management layanan
+	Route::resource('services', 'ServiceController', ['except' => ['show']]);
+
 });
 
