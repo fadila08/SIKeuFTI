@@ -18,7 +18,7 @@ class CustomerController extends Controller
 
     public function index(Customer $data)
     {
-        return view('customers.index', ['cust' => $data->paginate(15)]);
+        return view('customers.index', ['customers' => $data->paginate(15)]);
     }
 
     public function create()
@@ -33,19 +33,17 @@ class CustomerController extends Controller
         return redirect()->route('cust.index')->withStatus(__('Customer successfully added.'));
     }
 
-    public function edit(User $user)
+    public function edit(Customer $customer)
     {
-        return view('users.edit', compact('user'));
+        return view('customers.edit', compact('customer'));
+        // dd("tes");
     }
 
-    public function update(UserRequest $request, User  $user)
+    public function update(CustomerRequest $request, Customer  $customer)
     {
-        $user->update(
-            $request->merge(['password' => Hash::make($request->get('password'))])
-                ->except([$request->get('password') ? '' : 'password']
-        ));
+        $customer->update($request->all());
 
-        return redirect()->route('user.index')->withStatus(__('User successfully updated.'));
+        return redirect()->route('cust.index')->withStatus(__('Customer successfully updated.'));
     }
 
     public function destroy(Customer  $customer)
@@ -53,5 +51,7 @@ class CustomerController extends Controller
         $customer->delete();
 
         return redirect()->route('cust.index')->withStatus(__('Customer successfully deleted.'));
+        // return redirect()->route('cust.index')->withStatus(__($customer->cust_name));
+
     }
 }

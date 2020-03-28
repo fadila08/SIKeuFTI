@@ -27,7 +27,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 	//management customer
-	Route::resource('cust', 'CustomerController');
-
+	Route::resource('cust', 'CustomerController', ['except' => ['show']]);
 });
 
