@@ -25,9 +25,11 @@ class CustomerRequest extends FormRequest
      */
     public function rules()
     {
+
+        // dd($this->route('cust'));
         return [
             'cust_name' => [
-                'required', 'min:3', Rule::unique((new Customer)->getTable())->ignore($this->route()->customer->id ?? null)
+                'required', 'min:3', Rule::unique((new Customer)->getTable())->ignore($this->route('cust') ?? null)
             ],
             'cust_address' => [
                 'required', 'min:3'

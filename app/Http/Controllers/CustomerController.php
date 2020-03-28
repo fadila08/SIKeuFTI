@@ -33,21 +33,25 @@ class CustomerController extends Controller
         return redirect()->route('cust.index')->withStatus(__('Customer successfully added.'));
     }
 
-    public function edit(Customer $customer)
+    public function edit($id='')
     {
+        $customer = Customer::findOrFail($id);
         return view('customers.edit', compact('customer'));
-        // dd("tes");
+        // dd($customer);
     }
 
-    public function update(CustomerRequest $request, Customer  $customer)
+    public function update(CustomerRequest $request, $id='')
     {
+        // dd($request->all());
+        $customer = Customer::findOrFail($id);
         $customer->update($request->all());
 
         return redirect()->route('cust.index')->withStatus(__('Customer successfully updated.'));
     }
 
-    public function destroy(Customer  $customer)
+    public function destroy($id='')
     {
+        $customer = Customer::findOrFail($id);
         $customer->delete();
 
         return redirect()->route('cust.index')->withStatus(__('Customer successfully deleted.'));
