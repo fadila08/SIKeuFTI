@@ -32,6 +32,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('cred', 'CreditorController', ['except' => ['show']]);
 	//management layanan
 	Route::resource('services', 'ServiceController', ['except' => ['show']]);
+	//management code of account
+	Route::resource('coa', 'CoaController', ['except' => ['show']]);
+	//management account group (COA)
+	Route::resource('accGroup', 'AccGroupController', ['except' => ['show']]);
 
 });
 
