@@ -61,14 +61,14 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <form action="{{ route('services.destroy', $service) }}" method="post">
+                                                    <!-- <form action="{{ route('services.destroy', $service) }}" method="post">
                                                         @csrf
-                                                        @method('delete')
+                                                        @method('delete') -->
                                                         <a class="dropdown-item" href="{{ route('services.edit', $service->id) }}">{{ __('Edit') }}</a>
-                                                        <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this service ?") }}') ? this.parentElement.submit() : ''">
+                                                        <!-- <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this service ?") }}') ? this.parentElement.submit() : ''">
                                                             {{ __('Delete') }}
                                                         </button>
-                                                    </form>    
+                                                    </form>     -->
                                                 </div>
 
                                             </div>
