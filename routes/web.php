@@ -36,6 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('coa', 'CoaController', ['except' => ['show']]);
 	//management account group (COA)
 	Route::resource('accGroup', 'AccGroupController', ['except' => ['show']]);
+	//management proyek
+	Route::resource('project', 'ProjectController', ['except' => ['show']]);
+
 
 });
 
