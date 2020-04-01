@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('cust_phone') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-cust-phone">{{ __('Phone Number') }}</label>
-                                    <input type="text" name="cust_phone" id="input-cust-phone" class="form-control form-control-alternative{{ $errors->has('cust_phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Customer Phone') }}" value="{{ old('cust_phone', $customer->cust_phone) }}" required>
+                                    <input type="phone" name="cust_phone" id="input-cust-phone" class="form-control form-control-alternative{{ $errors->has('cust_phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Customer Phone') }}" value="{{ old('cust_phone', $customer->cust_phone) }}" required>
 
                                     @if ($errors->has('cust_phone'))
                                         <span class="invalid-feedback" role="alert">

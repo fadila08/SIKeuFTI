@@ -21,7 +21,6 @@ class CreateProjectsTable extends Migration
             $table->date('project_started');
             $table->date('project_ended');
             $table->float('project_cost');
-            $table->boolean('project_status');
             $table->timestamps();
 
             $table->foreign('id_cust')->references('id')->on('customers');

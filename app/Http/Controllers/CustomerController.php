@@ -37,12 +37,10 @@ class CustomerController extends Controller
     {
         $customer = Customer::findOrFail($id);
         return view('customers.edit', compact('customer'));
-        // dd($customer);
     }
 
     public function update(CustomerRequest $request, $id='')
     {
-        // dd($request->all());
         $customer = Customer::findOrFail($id);
         $customer->update($request->all());
 
@@ -55,7 +53,5 @@ class CustomerController extends Controller
         $customer->delete();
 
         return redirect()->route('cust.index')->withStatus(__('Customer successfully deleted.'));
-        // return redirect()->route('cust.index')->withStatus(__($customer->cust_name));
-
     }
 }

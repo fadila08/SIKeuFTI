@@ -28,5 +28,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 	//management customer
 	Route::resource('cust', 'CustomerController', ['except' => ['show']]);
+	//management kreditur
+	Route::resource('cred', 'CreditorController', ['except' => ['show']]);
+	//management layanan
+	Route::resource('services', 'ServiceController', ['except' => ['show']]);
+	//management code of account
+	Route::resource('coa', 'CoaController', ['except' => ['show']]);
+	//management account group (COA)
+	Route::resource('accGroup', 'AccGroupController', ['except' => ['show']]);
+	//management proyek
+	Route::resource('project', 'ProjectController', ['except' => ['show']]);
+
+
 });
 

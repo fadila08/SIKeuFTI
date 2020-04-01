@@ -81,7 +81,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
+                        <i class="ni ni-tv-2 text-primary-fti"></i> {{ __('Dashboard') }}
                     </a>                
                 </li>
             </ul>
@@ -91,28 +91,28 @@
             
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('COA') }}
+                    <a class="nav-link" href="{{ route('coa.index') }}">
+                        <i class="ni ni-collection text-primary-fti"></i> {{ __('COA') }}
                     </a>                
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('cust.index') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Customer') }}
+                        <i class="ni ni-single-02 text-primary-fti"></i> {{ __('Customer') }}
                     </a>                
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Kreditur') }}
+                    <a class="nav-link" href="{{ route('cred.index') }}">
+                        <i class="ni ni-credit-card text-primary-fti"></i> {{ __('Kreditur') }}
                     </a>                
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Layanan') }}
+                    <a class="nav-link" href="{{ route('services.index') }}">
+                        <i class="ni ni-books text-primary-fti"></i> {{ __('Layanan') }}
                     </a>                
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Proyek') }}
+                    <a class="nav-link" href="{{ route('project.index') }}">
+                        <i class="ni ni-laptop text-primary-fti"></i> {{ __('Proyek') }}
                     </a>                
                 </li>
             </ul>
