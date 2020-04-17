@@ -13,6 +13,9 @@ use App\Service;
 use App\Customer;
 use Auth;
 
+//tambahkan library ini
+use App\Http\Library\myLog;
+
 class ProjectController extends Controller
 {
     public function __construct()
