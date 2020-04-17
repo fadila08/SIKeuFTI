@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function () {
 	//management user
 	Route::resource('user', 'UserController', ['except' => ['show']]);
+	Route::resource('userDir', 'userDirController', ['except' => ['show']]);
 	Route::resource('pilihUser', 'pilihUserController', ['except' => ['show']]);
 	//management profile
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

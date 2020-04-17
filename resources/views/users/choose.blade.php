@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="text-center">
                                     <br>
-                                    <a href="#">
+                                    <a href="{{ route('userDir.index') }}">
                                         <button class="btn btn-primary my-2">{{ __('Akun Direksi') }}</button>
                                     </a>
                                 </div>
