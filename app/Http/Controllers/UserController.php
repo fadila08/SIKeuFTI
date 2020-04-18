@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Library\myLog;
 
 class UserController extends Controller
 {
@@ -16,6 +17,9 @@ class UserController extends Controller
      */
     public function index(User $model)
     {
+        $myLog = new myLog;
+        $myLog->go('show','','','users');
+
         return view('users.index', ['users' => $model->paginate(15)]);
     }
 
@@ -40,6 +44,9 @@ class UserController extends Controller
     {
         $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
 
+        $myLog = new myLog;
+        $myLog->go('store','',\json_encode($request->merge(['password' => Hash::make($request->get('password'))])->all()),'users');
+
         return redirect()->route('user.index')->withStatus(__('User successfully created.'));
     }
 
@@ -63,10 +70,17 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User  $user)
     {
+        $before_value = \json_encode($user);
+
         $user->update(
             $request->merge(['password' => Hash::make($request->get('password'))])
                 ->except([$request->get('password') ? '' : 'password']
         ));
+
+        $myLog = new myLog;
+        $myLog->go('update',$before_value,\json_encode($request->merge(['password' => Hash::make($request->get('password'))])
+                                                            ->except([$request->get('password') ? '' : 'password']
+                                                            )),'users');
 
         return redirect()->route('user.index')->withStatus(__('User successfully updated.'));
     }
@@ -79,7 +93,12 @@ class UserController extends Controller
      */
     public function destroy(User  $user)
     {
+        $before_value = \json_encode($user);
+
         $user->delete();
+
+        $myLog = new myLog;
+        $myLog->go('destroy',$before_value,'','users');
 
         return redirect()->route('user.index')->withStatus(__('User successfully deleted.'));
     }

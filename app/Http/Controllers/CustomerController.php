@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\User;
 use App\Customer;
+use App\Http\Library\myLog;
 use Auth;
 
 class CustomerController extends Controller
@@ -18,6 +19,9 @@ class CustomerController extends Controller
 
     public function index(Customer $data)
     {
+        $myLog = new myLog;
+        $myLog->go('show','','','customers');
+
         return view('customers.index', ['customers' => $data->paginate(15)]);
     }
 
@@ -29,6 +33,9 @@ class CustomerController extends Controller
     public function store(CustomerRequest $request, Customer $model)
     {
         $model->create($request->all());
+
+        $myLog = new myLog;
+        $myLog->go('store','',\json_encode($request->all()),'customers');
 
         return redirect()->route('cust.index')->withStatus(__('Customer successfully added.'));
     }
@@ -42,7 +49,13 @@ class CustomerController extends Controller
     public function update(CustomerRequest $request, $id='')
     {
         $customer = Customer::findOrFail($id);
+
+        $before_value = \json_encode($customer);
+
         $customer->update($request->all());
+
+        $myLog = new myLog;
+        $myLog->go('update',$before_value,\json_encode($request->all()),'customers');
 
         return redirect()->route('cust.index')->withStatus(__('Customer successfully updated.'));
     }
@@ -50,7 +63,13 @@ class CustomerController extends Controller
     public function destroy($id='')
     {
         $customer = Customer::findOrFail($id);
+
+        $before_value = \json_encode($customer);
+
         $customer->delete();
+
+        $myLog = new myLog;
+        $myLog->go('destroy',$before_value,'','customers');
 
         return redirect()->route('cust.index')->withStatus(__('Customer successfully deleted.'));
     }

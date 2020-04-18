@@ -10,6 +10,7 @@ use App\User;
 use App\Coa;
 use App\Account_group;
 use App\Normal_balance;
+use App\Http\Library\myLog;
 use Auth;
 
 class CoaController extends Controller
@@ -21,6 +22,9 @@ class CoaController extends Controller
 
     public function index(Coa $data)
     {
+        $myLog = new myLog;
+        $myLog->go('show','','','coas');
+        
         $data = Coa::orderBy('acc_code', 'ASC')->paginate(15);
      
         return view('coas.index', ['coas' => $data]);
@@ -38,6 +42,9 @@ class CoaController extends Controller
     {
         $model->create($request->all());
 
+        $myLog = new myLog;
+        $myLog->go('store','',\json_encode($request->all()),'coas');
+
         return redirect()->route('coa.index')->withStatus(__('Code of Account successfully added.'));
     }
 
@@ -53,7 +60,13 @@ class CoaController extends Controller
     public function update(CoaRequest $request, $id='')
     {
         $coa = Coa::findOrFail($id);
+
+        $before_value = \json_encode($coa);
+
         $coa->update($request->all());
+
+        $myLog = new myLog;
+        $myLog->go('update',$before_value,\json_encode($request->all()),'coas');
 
         return redirect()->route('coa.index')->withStatus(__('Code of Account successfully updated.'));
     }
@@ -61,7 +74,13 @@ class CoaController extends Controller
     public function destroy($id='')
     {
         $coa = Coa::findOrFail($id);
+
+        $before_value = \json_encode($coa);
+
         $coa->delete();
+
+        $myLog = new myLog;
+        $myLog->go('destroy',$before_value,'','coas');
 
         return redirect()->route('coa.index')->withStatus(__('Code of Account successfully deleted.'));
     }

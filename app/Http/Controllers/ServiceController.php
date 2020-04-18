@@ -9,7 +9,7 @@ use App\User;
 use App\Service;
 use Auth;
 
-//tambahkan library ini
+//Lubrary log
 use App\Http\Library\myLog;
 
 class ServiceController extends Controller
@@ -32,7 +32,7 @@ class ServiceController extends Controller
 
         // berhubung ini show maka before dan after valuenya kosong
         $myLog = new myLog;
-        $myLog->go('show','','','Service');
+        $myLog->go('show','','','services');
 
         return view('services.index', ['services' => $data->paginate(15)]);
     }
@@ -57,7 +57,7 @@ class ServiceController extends Controller
 
         // berhubung ini insert maka before valuenya kosong
         $myLog = new myLog;
-        $myLog->go('store','',\json_encode($request->all()),'Service');
+        $myLog->go('store','',\json_encode($request->all()),'services');
 
         return redirect()->route('services.index')->withStatus(__('Service successfully added.'));
     }
@@ -87,7 +87,7 @@ class ServiceController extends Controller
         // }
 
         $myLog = new myLog;
-        $myLog->go('update',$before_value,\json_encode($request->all()),'Service');
+        $myLog->go('update',$before_value,\json_encode($request->all()),'services');
 
         return redirect()->route('services.index')->withStatus(__('Service successfully updated.'));
     }
@@ -113,7 +113,7 @@ class ServiceController extends Controller
         //khusus destroy after value dikosong kan
 
         $myLog = new myLog;
-        $myLog->go('destroy',$before_value,'','Service');
+        $myLog->go('destroy',$before_value,'','services');
 
         return redirect()->route('services.index')->withStatus(__('Service successfully deleted.'));
     }

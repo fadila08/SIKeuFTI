@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\User;
 use App\Account_group;
+use App\Http\Library\myLog;
 use Auth;
 
 class AccGroupController extends Controller
@@ -19,6 +20,9 @@ class AccGroupController extends Controller
 
     public function index(Account_group $data)
     {
+        $myLog = new myLog;
+        $myLog->go('show','','','account_groups');
+
         return view('accGroups.index', ['accGroups' => $data->paginate(15)]);
     }
 
@@ -30,6 +34,9 @@ class AccGroupController extends Controller
     public function store(AccGroupRequest $request, Account_group $model)
     {
         $model->create($request->all());
+
+        $myLog = new myLog;
+        $myLog->go('store','',\json_encode($request->all()),'account_groups');
 
         return redirect()->route('accGroup.index')->withStatus(__('Account Group successfully added.'));
     }
@@ -44,7 +51,13 @@ class AccGroupController extends Controller
     public function update(AccGroupRequest $request, $id='')
     {
         $accGroup = Account_group::findOrFail($id);
+
+        $before_value = \json_encode($accGroup);
+
         $accGroup->update($request->all());
+
+        $myLog = new myLog;
+        $myLog->go('update',$before_value,\json_encode($request->all()),'account_groups');
 
         return redirect()->route('accGroup.index')->withStatus(__('Account Group successfully updated.'));
     }
@@ -52,7 +65,13 @@ class AccGroupController extends Controller
     public function destroy($id='')
     {
         $accGroup = Account_group::findOrFail($id);
+
+        $before_value = \json_encode($accGroup);
+
         $accGroup->delete();
+
+        $myLog = new myLog;
+        $myLog->go('destroy',$before_value,'','account_groups');
 
         return redirect()->route('accGroup.index')->withStatus(__('Account Group successfully deleted.'));
     }

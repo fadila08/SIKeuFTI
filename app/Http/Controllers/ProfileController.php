@@ -6,6 +6,8 @@ use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Library\myLog;
+
 class ProfileController extends Controller
 {
     /**
@@ -26,7 +28,13 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request)
     {
+        $userBefore = auth()->user();
+        $before_value = \json_encode($userBefore);
+
         auth()->user()->update($request->all());
+
+        $myLog = new myLog;
+        $myLog->go('update',$before_value,\json_encode($request->all()),'users');
 
         return back()->withStatus(__('Profile successfully updated.'));
     }
@@ -39,7 +47,13 @@ class ProfileController extends Controller
      */
     public function password(PasswordRequest $request)
     {
+        $userPassBefore = auth()->user()->password;
+        $before_value = \json_encode($userPassBefore);
+
         auth()->user()->update(['password' => Hash::make($request->get('password'))]);
+
+        $myLog = new myLog;
+        $myLog->go('update',$before_value,\json_encode(['password' => Hash::make($request->get('password'))]),'users');
 
         return back()->withPasswordStatus(__('Password successfully updated.'));
     }

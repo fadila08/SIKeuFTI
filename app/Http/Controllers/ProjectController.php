@@ -11,10 +11,8 @@ use App\Project;
 use App\Project_status;
 use App\Service;
 use App\Customer;
-use Auth;
-
-//tambahkan library ini
 use App\Http\Library\myLog;
+use Auth;
 
 class ProjectController extends Controller
 {
@@ -25,6 +23,9 @@ class ProjectController extends Controller
 
     public function index(Project $data)
     {
+        $myLog = new myLog;
+        $myLog->go('show','','','projects');
+
         return view('projects.index', ['projects' => $data->paginate(15)]);
     }
 
@@ -40,6 +41,9 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request, Project $model)
     {
         $model->create($request->all());
+
+        $myLog = new myLog;
+        $myLog->go('store','',\json_encode($request->all()),'projects');
 
         return redirect()->route('project.index')->withStatus(__('Project successfully added.'));
     }
@@ -57,7 +61,13 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, $id='')
     {
         $project = Project::findOrFail($id);
+
+        $before_value = \json_encode($project);
+
         $project->update($request->all());
+
+        $myLog = new myLog;
+        $myLog->go('update',$before_value,\json_encode($request->all()),'projects');
 
         return redirect()->route('project.index')->withStatus(__('Project successfully updated.'));
     }
@@ -65,7 +75,13 @@ class ProjectController extends Controller
     public function destroy($id='')
     {
         $project = Project::findOrFail($id);
+
+        $before_value = \json_encode($project);
+
         $project->delete();
+
+        $myLog = new myLog;
+        $myLog->go('destroy',$before_value,'','projects');
 
         return redirect()->route('project.index')->withStatus(__('Project successfully deleted.'));
     }
