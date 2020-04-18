@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+	//log aktivitas
+	Route::get('logActivity', ['as' => 'logActivity.index', 'uses' => 'logActivityController@index']);
 	//management customer
 	Route::resource('cust', 'CustomerController', ['except' => ['show']]);
 	//management kreditur
@@ -40,6 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('accGroup', 'AccGroupController', ['except' => ['show']]);
 	//management proyek
 	Route::resource('project', 'ProjectController', ['except' => ['show']]);
+
 
 
 });

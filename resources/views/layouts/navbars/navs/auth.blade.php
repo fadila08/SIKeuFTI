@@ -39,7 +39,7 @@
                         <i class="ni ni-settings-gear-65"></i>
                         <span>{{ __('Settings') }}</span>
                     </a> -->
-                    <a href="#" class="dropdown-item">
+                    <a href="{{ route('logActivity.index') }}" class="dropdown-item">
                         <i class="ni ni-calendar-grid-58"></i>
                         <span>{{ __('Log Activity') }}</span>
                     </a>
