@@ -22,7 +22,7 @@ class logActivityController extends Controller
         $myLog = new myLog;
         $myLog->go('show','','','logs');
         
-        $data = Log::orderBy('created_at', 'ASC')->paginate(15);
+        $data = Log::orderBy('created_at', 'DESC')->paginate(15);
      
         return view('logs.index', ['logs' => $data]);
     }
