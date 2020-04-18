@@ -19,6 +19,14 @@ class logActivityController extends Controller
 
     public function index(Log $data)
     {
+        // tambahkan pengecekan role
+        if(Auth::user()->id_roles == 1){
+            $header = 'layouts.app';
+        }
+        if(Auth::user()->id_roles == 2){
+            $header = 'layouts.appadmin';
+        }
+        
         $myLog = new myLog;
         $myLog->go('show','','','logs');
         
