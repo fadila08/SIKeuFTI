@@ -4,6 +4,8 @@ namespace App\Http\Library;
 use App\Log;
 use Auth;
 
+//made by Aditya Nanda Keren :D
+
 class myLog{
     public function __construct(){
       $this->id = Auth::user()->id;

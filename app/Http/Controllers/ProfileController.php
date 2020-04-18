@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Http\Library\myLog;
 
+use Auth;
+
 class ProfileController extends Controller
 {
     /**
@@ -17,7 +19,17 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        return view('profile.edit');
+
+        // tambahkan pengecekan role
+        if(Auth::user()->id_roles == 1){
+            $header = 'layouts.app';
+
+        }
+        if(Auth::user()->id_roles == 2){
+            $header = 'layouts.appadmin';
+        }
+        
+        return view('profile.edit',compact('header'));
     }
 
     /**
