@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('accGroup', 'AccGroupController', ['except' => ['show']]);
 	//management proyek
 	Route::resource('project', 'ProjectController', ['except' => ['show']]);
+	//management transaksi proyek
+	Route::resource('projectTransaction', 'projectTransactionController', ['except' => ['show']]);
 
 
 

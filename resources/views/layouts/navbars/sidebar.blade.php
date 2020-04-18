@@ -121,7 +121,7 @@
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('projectTransaction.create') }}">
                                     {{ __('Transaksi Proyek') }}
                                 </a>
                             </li>
