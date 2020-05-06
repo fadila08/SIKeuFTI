@@ -20,16 +20,16 @@ class ProfileController extends Controller
     public function edit()
     {
 
-        // tambahkan pengecekan role
-        if(Auth::user()->id_roles == 1){
-            $header = 'layouts.app';
+        // // tambahkan pengecekan role
+        // if(Auth::user()->id_roles == 1){
+        //     $header = 'layouts.app';
 
-        }
-        if(Auth::user()->id_roles == 2){
-            $header = 'layouts.appadmin';
-        }
+        // }
+        // if(Auth::user()->id_roles == 2){
+        //     $header = 'layouts.appadmin';
+        // }
         
-        return view('profile.edit',compact('header'));
+        return view('profile.edit');
     }
 
     /**

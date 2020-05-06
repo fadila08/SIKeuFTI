@@ -272,12 +272,14 @@
                                     {{ __('User profile') }}
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('pilihUser.index') }}">
-                                    {{ __('User Management') }}
+                            @if (Auth::user()->id_roles==1)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('pilihUser.index') }}">
+                                        {{ __('User Management') }}
 
-                                </a>
-                            </li>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </li>

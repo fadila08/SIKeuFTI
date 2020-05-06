@@ -32,13 +32,13 @@ class HomeController extends Controller
         //Super Admin
         if(Auth::user()->id_roles == 1){
             // $data['user'] = User::with('account')->get();
-            return view('dashboardSuperadmin');
+            return view('dashboard');
         }
 
         //Admin
         if(Auth::user()->id_roles == 2){
             // $data['user'] = User::with('account')->where('role','distributor')->get();
-            return view('dashboardAdmin');
+            return view('dashboard');
         }
 
         //direksi
