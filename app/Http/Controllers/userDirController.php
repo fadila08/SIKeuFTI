@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserDirRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Library\myLog;
 
@@ -36,11 +36,11 @@ class userDirController extends Controller
     /**
      * Store a newly created user in storage
      *
-     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\Http\Requests\UserDirRequest  $request
      * @param  \App\User  $model
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(UserRequest $request, User $model)
+    public function store(UserDirRequest $request, User $model)
     {
         $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
 
@@ -64,11 +64,11 @@ class userDirController extends Controller
     /**
      * Update the specified user in storage
      *
-     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\Http\Requests\UserDirRequest  $request
      * @param  \App\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UserRequest $request, User  $userDir)
+    public function update(UserDirRequest $request, User  $userDir)
     {
         // $usr = User::findOrFail($user);
 
