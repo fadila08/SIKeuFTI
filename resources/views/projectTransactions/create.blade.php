@@ -10,7 +10,16 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <!-- <h3 class="mb-0" style="color:#028090">{{ __('Code of Accounts') }}</h3> -->
+                                <div class="col-12">
+                                    @if (session('status'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ session('status') }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="col-4 text-right">
                                 <!-- <a href="{{ route('coa.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a> -->
@@ -18,7 +27,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('projectTransaction.store') }}" autocomplete="off">
+                        <form method="post" action="{{ route('generalLedger.store') }}" autocomplete="off" enctype="multipart/form-data">
                             @csrf
                             
                             <h6 class="heading-small text-muted mb-4">{{ __('Project Transaction') }}</h6>
@@ -67,13 +76,13 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group{{ $errors->has('nominal') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-nominal">{{ __('Nominal') }}</label>
-                                    <input type="text" name="nominal" id="input-nominal" class="form-control form-control-alternative{{ $errors->has('nominal') ? ' is-invalid' : '' }}" placeholder="{{ __('Nominal') }}" value="{{ old('nominal') }}" required autofocus>
+                                <div class="form-group{{ $errors->has('upload_proof') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-upload-proof">{{ __('Upload Proof Transaction') }}</label>
+                                    <input type="file" name="upload_proof" id="input-upload-proof" class="form-control form-control-alternative{{ $errors->has('upload_proof') ? ' is-invalid' : '' }}" placeholder="{{ __('Upload Proof Transaction') }}" value="{{ old('upload_proof') }}" required autofocus>
 
-                                    @if ($errors->has('nominal'))
+                                    @if ($errors->has('upload_proof'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('nominal') }}</strong>
+                                            <strong>{{ $errors->first('upload_proof') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -100,6 +109,17 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+
+                                <div class="form-group{{ $errors->has('nominal') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-nominal">{{ __('Nominal') }}</label>
+                                    <input type="text" name="nominal" id="input-nominal" class="form-control form-control-alternative{{ $errors->has('nominal') ? ' is-invalid' : '' }}" placeholder="{{ __('Nominal') }}" value="{{ old('nominal') }}" required autofocus>
+
+                                    @if ($errors->has('nominal'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('nominal') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
 
                                 <div class="text-center">

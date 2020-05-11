@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('project', 'ProjectController', ['except' => ['show']]);
 	//management transaksi proyek
 	Route::resource('projectTransaction', 'projectTransactionController', ['except' => ['show']]);
+	//jurnal umum
+	Route::resource('generalLedger', 'generalLedgerController', ['except' => ['show']]);
 
 
 
