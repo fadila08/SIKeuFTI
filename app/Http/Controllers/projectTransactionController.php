@@ -31,7 +31,13 @@ class projectTransactionController extends Controller
     {
         //insert to jurnal umum
         $proof = $request->file('upload_proof')->store('proof_transactions');
-        $model->create($request->merge(['nominal' => Crypt::encryptString($request->get('nominal'))],['upload_proof' => $proof])->all());
+
+        //di exclude dulu upload proofnya
+        $data = $request->merge(['nominal' => Crypt::encryptString($request->get('nominal'))])->except('upload_proof');
+        //ditambah secara manual
+        $data['upload_proof'] = $proof;
+
+        $model->create($data);
 
         //insert to buku besar
         $gledger = General_ledger::latest()->first();
