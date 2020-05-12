@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('generalLedger.store') }}" autocomplete="off" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('projectTransaction.store') }}" autocomplete="off" enctype="multipart/form-data">
                             @csrf
                             
                             <h6 class="heading-small text-muted mb-4">{{ __('Project Transaction') }}</h6>
