@@ -15,6 +15,8 @@ class CreateTrialBalancesTable extends Migration
     {
         Schema::create('trial_balances', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->date('period');
+            $table->unsignedBigInteger('id_coa');
             $table->unsignedBigInteger('id_ledger');
             $table->timestamps();
 

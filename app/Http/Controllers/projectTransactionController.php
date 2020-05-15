@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\General_ledger;
 use App\Ledger;
+use App\Trial_balance;
 use App\Coa;
 use App\Project;
 use App\Http\Library\myLog;
@@ -135,6 +136,51 @@ class projectTransactionController extends Controller
         }
         
         //insert to neraca saldo
+        $cek_gledger = General_ledger::latest()->first();
+        $cek_ledger1 = Ledger::where('id_coa','=',$cek_gledger->id_debet_acc)->latest()->first();
+        $cek_ledger2 = Ledger::where('id_coa','=',$cek_gledger->id_cred_acc)->latest()->first();
+        $cek_tbalance1 = Trial_balance::where('id_coa','=',$cek_ledger1->id_coa)->first();
+        $cek_tbalance2 = Trial_balance::where('id_coa','=',$cek_ledger2->id_coa)->first();
+        
+        $thn = Carbon::parse($cek_gledger->date)->format('Y');
+
+        //inputan pertama
+        if ($cek_tbalance1 != null) { 
+            $ldgr1 = Ledger::where('id_coa','=',$cek_tbalance1->id_coa)->latest()->first();         
+            DB::table('trial_balances')->where('id_ledger',$cek_ledger1->id)->update([
+                'period' => $thn,
+                'id_coa' => $cek_ledger1->id_coa,
+                'id_ledger' => $ldgr1->id,
+                'created_at' => $cek_tbalance1->created_at,
+                'updated_at' => Carbon::now()
+            ]);
+        } else {
+            DB::table('trial_balances')->insert(['period' => $thn,
+                                        'id_coa' => $cek_ledger1->id_coa,
+                                        'id_ledger' => $cek_ledger1->id,
+                                        'created_at' => Carbon::now(),
+                                        'updated_at' => Carbon::now()
+                                        ]);
+        }
+
+        //inputan kedua
+        if ($cek_tbalance2 != null) {  
+            $ldgr2 = Ledger::where('id_coa','=',$cek_tbalance2->id_coa)->latest()->first();                 
+            DB::table('trial_balances')->where('id_ledger',$cek_ledger2->id)->update([
+                'period' => $thn,
+                'id_coa' => $cek_ledger2->id_coa,
+                'id_ledger' => $ldgr2->id,
+                'created_at' => $cek_tbalance2->created_at,
+                'updated_at' => Carbon::now()
+            ]);
+        } else {
+            DB::table('trial_balances')->insert(['period' => $thn,
+                                        'id_coa' => $cek_ledger2->id_coa,
+                                        'id_ledger' => $cek_ledger2->id,
+                                        'created_at' => Carbon::now(),
+                                        'updated_at' => Carbon::now()
+                                        ]);
+        }
 
         // $myLog = new myLog;
         // $myLog->go('store','',\json_encode($request->all()),'transactions');
