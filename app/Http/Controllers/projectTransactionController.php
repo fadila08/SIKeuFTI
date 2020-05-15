@@ -137,46 +137,53 @@ class projectTransactionController extends Controller
         
         //insert to neraca saldo
         $cek_gledger = General_ledger::latest()->first();
-        $cek_ledger1 = Ledger::where('id_coa','=',$cek_gledger->id_debet_acc)->latest()->first();
-        $cek_ledger2 = Ledger::where('id_coa','=',$cek_gledger->id_cred_acc)->latest()->first();
-        $cek_tbalance1 = Trial_balance::where('id_coa','=',$cek_ledger1->id_coa)->first();
-        $cek_tbalance2 = Trial_balance::where('id_coa','=',$cek_ledger2->id_coa)->first();
+        $cek_akun_d = Trial_balance::where('id_coa','=',$cek_gledger->id_debet_acc)->first();
+        $cek_akun_k = Trial_balance::where('id_coa','=',$cek_gledger->id_cred_acc)->first();
+        $get_ledger_d = Ledger::where('id_coa','=',$cek_gledger->id_debet_acc)->latest()->first();
+        $get_ledger_k = Ledger::where('id_coa','=',$cek_gledger->id_cred_acc)->latest()->first();
+
+        // $cek_ledger1 = Ledger::where('id_coa','=',$cek_gledger->id_debet_acc)->latest()->first();
+        // $cek_ledger2 = Ledger::where('id_coa','=',$cek_gledger->id_cred_acc)->latest()->first();
+        // $cek_tbalance1 = Trial_balance::where('id_coa','=',$cek_ledger1->id_coa)->first();
+        // $cek_tbalance2 = Trial_balance::where('id_coa','=',$cek_ledger2->id_coa)->first();
+        // $cek_tbalance3 = Trial_balance::where('id_coa','=',$cek_ledger1->id_coa)->first();
+        // $cek_tbalance4 = Trial_balance::where('id_coa','=',$cek_ledger2->id_coa)->first();
         
         $thn = Carbon::parse($cek_gledger->date)->format('Y');
 
         //inputan pertama
-        if ($cek_tbalance1 != null) { 
-            $ldgr1 = Ledger::where('id_coa','=',$cek_tbalance1->id_coa)->latest()->first();         
-            DB::table('trial_balances')->where('id_ledger',$cek_ledger1->id)->update([
+        if ($cek_akun_d != null) { 
+            // $ldgr1 = Ledger::where('id_coa','=',$cek_tbalance1->id_coa)->latest()->first();         
+            DB::table('trial_balances')->where('id_coa',$cek_gledger->id_debet_acc)->update([
                 'period' => $thn,
-                'id_coa' => $cek_ledger1->id_coa,
-                'id_ledger' => $ldgr1->id,
-                'created_at' => $cek_tbalance1->created_at,
+                'id_coa' => $get_ledger_d->id_coa,
+                'id_ledger' => $get_ledger_d->id,
+                'created_at' => $cek_akun_d->created_at,
                 'updated_at' => Carbon::now()
             ]);
         } else {
             DB::table('trial_balances')->insert(['period' => $thn,
-                                        'id_coa' => $cek_ledger1->id_coa,
-                                        'id_ledger' => $cek_ledger1->id,
+                                        'id_coa' => $get_ledger_d->id_coa,
+                                        'id_ledger' => $get_ledger_d->id,
                                         'created_at' => Carbon::now(),
                                         'updated_at' => Carbon::now()
                                         ]);
         }
 
         //inputan kedua
-        if ($cek_tbalance2 != null) {  
-            $ldgr2 = Ledger::where('id_coa','=',$cek_tbalance2->id_coa)->latest()->first();                 
-            DB::table('trial_balances')->where('id_ledger',$cek_ledger2->id)->update([
+        if ($cek_akun_k != null) {  
+            // $ldgr2 = Ledger::where('id_coa','=',$cek_tbalance2->id_coa)->latest()->first();                 
+            DB::table('trial_balances')->where('id_coa',$cek_gledger->id_cred_acc)->update([
                 'period' => $thn,
-                'id_coa' => $cek_ledger2->id_coa,
-                'id_ledger' => $ldgr2->id,
-                'created_at' => $cek_tbalance2->created_at,
+                'id_coa' => $get_ledger_k->id_coa,
+                'id_ledger' => $get_ledger_k->id,
+                'created_at' => $cek_akun_k->created_at,
                 'updated_at' => Carbon::now()
             ]);
         } else {
             DB::table('trial_balances')->insert(['period' => $thn,
-                                        'id_coa' => $cek_ledger2->id_coa,
-                                        'id_ledger' => $cek_ledger2->id,
+                                        'id_coa' => $get_ledger_k->id_coa,
+                                        'id_ledger' => $get_ledger_k->id,
                                         'created_at' => Carbon::now(),
                                         'updated_at' => Carbon::now()
                                         ]);
