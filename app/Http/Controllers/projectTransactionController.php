@@ -141,19 +141,11 @@ class projectTransactionController extends Controller
         $cek_akun_k = Trial_balance::where('id_coa','=',$cek_gledger->id_cred_acc)->first();
         $get_ledger_d = Ledger::where('id_coa','=',$cek_gledger->id_debet_acc)->latest()->first();
         $get_ledger_k = Ledger::where('id_coa','=',$cek_gledger->id_cred_acc)->latest()->first();
-
-        // $cek_ledger1 = Ledger::where('id_coa','=',$cek_gledger->id_debet_acc)->latest()->first();
-        // $cek_ledger2 = Ledger::where('id_coa','=',$cek_gledger->id_cred_acc)->latest()->first();
-        // $cek_tbalance1 = Trial_balance::where('id_coa','=',$cek_ledger1->id_coa)->first();
-        // $cek_tbalance2 = Trial_balance::where('id_coa','=',$cek_ledger2->id_coa)->first();
-        // $cek_tbalance3 = Trial_balance::where('id_coa','=',$cek_ledger1->id_coa)->first();
-        // $cek_tbalance4 = Trial_balance::where('id_coa','=',$cek_ledger2->id_coa)->first();
         
         $thn = Carbon::parse($cek_gledger->date)->format('Y');
 
         //inputan pertama
         if ($cek_akun_d != null) { 
-            // $ldgr1 = Ledger::where('id_coa','=',$cek_tbalance1->id_coa)->latest()->first();         
             DB::table('trial_balances')->where('id_coa',$cek_gledger->id_debet_acc)->update([
                 'period' => $thn,
                 'id_coa' => $get_ledger_d->id_coa,
@@ -172,7 +164,6 @@ class projectTransactionController extends Controller
 
         //inputan kedua
         if ($cek_akun_k != null) {  
-            // $ldgr2 = Ledger::where('id_coa','=',$cek_tbalance2->id_coa)->latest()->first();                 
             DB::table('trial_balances')->where('id_coa',$cek_gledger->id_cred_acc)->update([
                 'period' => $thn,
                 'id_coa' => $get_ledger_k->id_coa,
