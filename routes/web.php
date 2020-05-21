@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('projectTransaction', 'projectTransactionController', ['except' => ['show']]);
 	//jurnal umum
 	Route::resource('generalLedger', 'generalLedgerController', ['except' => ['show']]);
+	//buku besar
+	Route::resource('Ledger', 'LedgerController', ['except' => ['show']]);
 
 
 
