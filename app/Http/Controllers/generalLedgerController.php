@@ -16,6 +16,19 @@ use Auth;
 
 class generalLedgerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index(General_ledger $data)
+    {
+        // $myLog = new myLog;
+        // $myLog->go('show','','','projects');
+
+        return view('generalLedgers.index', ['generalLedgers' => $data->paginate(15)]);
+    }
+
     public function store(GeneralLedgerRequest $request, General_ledger $model)
     {
 
