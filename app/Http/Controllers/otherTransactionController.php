@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Requests\GeneralLedgerRequest;
-use App\Http\Requests\LedgerRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\General_ledger;
@@ -18,14 +17,13 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
-class projectTransactionController extends Controller
+class otherTransactionController extends Controller
 {
     public function create()
     {
-        $project = Project::get();
         $coa = Coa::get();
 
-        return view('projectTransactions.create', compact('project','coa'));
+        return view('otherTransactions.create', compact('coa'));
     }
 
     public function store(GeneralLedgerRequest $request, General_ledger $model)

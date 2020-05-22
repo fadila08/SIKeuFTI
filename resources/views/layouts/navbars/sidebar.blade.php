@@ -126,7 +126,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('otherTransaction.create') }}">
                                     {{ __('Transaksi Lain') }}
                                 </a>
                             </li>

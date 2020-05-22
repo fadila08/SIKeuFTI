@@ -27,9 +27,6 @@ class GeneralLedgerRequest extends FormRequest
     {
         // dd($this->route('cust'));
         return [
-            'id_project' => [
-                'required'
-            ],
             'date' => [
                 'required'
             ],
