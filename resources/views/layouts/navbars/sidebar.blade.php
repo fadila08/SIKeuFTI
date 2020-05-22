@@ -115,7 +115,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
+                        <i class="ni ni-credit-card text-primary-fti"></i>
                         <span class="nav-link-text" style="color: rgba(0, 0, 0, .5);">{{ __('Transaksi Harian') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-examples">
@@ -165,17 +165,17 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('generalLedger.index') }}">
-                        <i class="ni ni-key-25 text-info"></i> {{ __('Jurnal Umum') }}
+                        <i class="ni ni-single-copy-04 text-primary-fti"></i> {{ __('Jurnal Umum') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('Ledger.index') }}">
-                        <i class="ni ni-circle-08 text-pink"></i> {{ __('Buku Besar') }}
+                        <i class="ni ni-books text-primary-fti"></i> {{ __('Buku Besar') }}
                     </a>
                 </li>         
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('trialBalance.index') }}">
-                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Neraca Saldo') }}
+                        <i class="ni ni-collection text-primary-fti"></i> {{ __('Neraca Saldo') }}
                     </a>
                 </li>
                 <li class="nav-item">
