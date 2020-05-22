@@ -23,8 +23,8 @@ class generalLedgerController extends Controller
 
     public function index(General_ledger $data)
     {
-        // $myLog = new myLog;
-        // $myLog->go('show','','','projects');
+        $myLog = new myLog;
+        $myLog->go('show','','','general_ledgers');
 
         return view('generalLedgers.index', ['generalLedgers' => $data->paginate(15)]);
     }
