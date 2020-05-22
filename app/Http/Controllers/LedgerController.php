@@ -22,16 +22,13 @@ class LedgerController extends Controller
     public function index(Ledger $data)
     {
         $data = Ledger::get()->groupBy('id_coa'); 
-        // dd($data);
 
         //view dummy
-        return view('coba.coba', ['coba' => $data]);
+        // return view('coba.coba', ['coba' => $data]);
         
-
         // $myLog = new myLog;
         // $myLog->go('show','','','projects');
 
-        // return view('coas.index', ['coas' => $data]);
-        // return view('generalLedgers.index', ['generalLedgers' => $data->paginate(15)]);
+        return view('ledgers.index', ['ledgers' => $data]);
     }
 }
