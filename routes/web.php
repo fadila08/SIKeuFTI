@@ -48,6 +48,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('generalLedger', 'generalLedgerController', ['except' => ['show']]);
 	//buku besar
 	Route::resource('Ledger', 'LedgerController', ['except' => ['show']]);
+	//neraca saldo
+	Route::resource('trialBalance', 'trialBalanceController', ['except' => ['show']]);
 
 
 

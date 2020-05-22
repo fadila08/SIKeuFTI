@@ -18,21 +18,10 @@
                         </div>
                     </div>
                     
-                    <div class="col-12">
-                        @if (session('status'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('status') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-                    </div>
-
                     @foreach ($ledgers as $key => $value)
-                        <h5 class="card-title text-muted mb-0 ml-3">{{ __('No. Akun : ') }} {{ $key }}</h5>
-                        <h5 class="card-title text-muted mb-1 ml-3">{{ __('Nama Akun : ') }} {{ $key }}</h5>
-                    
+                        <h5 class="card-title text-muted mb-0 ml-3">{{ __('No. Akun : ') }} {{ $value[0]->coa->acc_code }}</h5>
+                        <h5 class="card-title text-muted mb-1 ml-3">{{ __('Nama Akun : ') }} {{ $value[0]->coa->acc_name }}</h5>
+                       
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush">
                                 <thead class="thead-light">

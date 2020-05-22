@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Ledger;
+use App\Coa;
 
 class Trial_balance extends Model
 {
@@ -14,4 +15,10 @@ class Trial_balance extends Model
     {
         return $this->belongsTo(\App\Ledger::class, 'id_ledger');
     }
+
+    public function coa()
+    {
+        return $this->belongsTo(\App\Coa::class, 'id_coa');
+    }
+
 }
