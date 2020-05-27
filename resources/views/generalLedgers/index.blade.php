@@ -87,8 +87,8 @@
                                                             <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body-img" >
-                                                            <img src="{{ asset('images') }}/{{ ($data->upload_proof) }}" alt="">
+                                                        <div class="modal-body" >
+                                                            <img class="img-fluid" src="{{ asset('images') }}/{{ ($data->upload_proof) }}" alt="" >
                                                         </div>
                                                     </div>
                                                 </div>
