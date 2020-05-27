@@ -75,12 +75,21 @@
                                             {{ __('.')}}
                                         </td>
                                         <td>
-                                            <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg">{{ $data->proof_num }}</a>
+                                            <a href="#" data-toggle="modal" data-target="#exampleModal-{{ $data->id }}">{{ $data->proof_num }}</a>
 
-                                            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg">
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal-{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
-                                                        <img src="{{ asset('images') }}/{{ ($data->upload_proof) }}" alt="" max-width="100%" height="auto">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">{{ $data->proof_num }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body-img" >
+                                                            <img src="{{ asset('images') }}/{{ ($data->upload_proof) }}" alt="">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
