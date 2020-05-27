@@ -30,6 +30,8 @@ class projectTransactionController extends Controller
 
     public function store(GeneralLedgerRequest $request, General_ledger $model)
     {
+        $myLog = new myLog;
+
         //insert to jurnal umum
         $proof = $request->file('upload_proof')->store('proof_transactions');
 
@@ -39,6 +41,10 @@ class projectTransactionController extends Controller
         $data['upload_proof'] = $proof;
 
         $model->create($data);
+
+        //log jurnal umum
+        //sekali input, ke insert semuanya jadi 1 entri
+        $myLog->go('store','',\json_encode($data),'general_ledgers');
 
         //insert to buku besar
         $gledger = General_ledger::latest()->first();
@@ -71,26 +77,35 @@ class projectTransactionController extends Controller
                 $n_cred_saldo1 = "0";
             }
             
-            DB::table('ledgers')->insert(['id_coa' => $acc1,
-                                        'id_desc' => $desc,
-                                        'debet_saldo' => Crypt::encryptString($n_deb_saldo1),
-                                        'cred_saldo' => Crypt::encryptString($n_cred_saldo1),
-                                        'created_at' => Carbon::now(),
-                                        'updated_at' => Carbon::now()
-                                        ]);
+            $ledgers_data_1 = array('id_coa' => $acc1,
+                                    'id_desc' => $desc,
+                                    'debet_saldo' => Crypt::encryptString($n_deb_saldo1),
+                                    'cred_saldo' => Crypt::encryptString($n_cred_saldo1),
+                                    'created_at' => Carbon::now(),
+                                    'updated_at' => Carbon::now()
+                                    );
+
+            DB::table('ledgers')->insert($ledgers_data_1);
+
+            //log buku besar (deb acc)
+            $myLog->go('store','',\json_encode($ledgers_data_1),'ledgers');
 
         } else {
             $n_deb_saldo1 = (string)$nominal;
             $n_cred_saldo1 = "0";
 
-            DB::table('ledgers')->insert(['id_coa' => $acc1,
-                                        'id_desc' => $desc,
-                                        'debet_saldo' => Crypt::encryptString($n_deb_saldo1),
-                                        'cred_saldo' => Crypt::encryptString($n_cred_saldo1),
-                                        'created_at' => Carbon::now(),
-                                        'updated_at' => Carbon::now()
-                                        ]);
+            $ledgers_data_1 = array('id_coa' => $acc1,
+                                    'id_desc' => $desc,
+                                    'debet_saldo' => Crypt::encryptString($n_deb_saldo1),
+                                    'cred_saldo' => Crypt::encryptString($n_cred_saldo1),
+                                    'created_at' => Carbon::now(),
+                                    'updated_at' => Carbon::now()
+                                    );
 
+            DB::table('ledgers')->insert($ledgers_data_1);
+
+            //log buku besar (deb acc)
+            $myLog->go('store','',\json_encode($ledgers_data_1),'ledgers');
         }
         
         //inputan kedua (cred acc)
@@ -113,26 +128,35 @@ class projectTransactionController extends Controller
                 $n_deb_saldo2 = "0";
             }
 
-            DB::table('ledgers')->insert(['id_coa' => $acc2,
-                                        'id_desc' => $desc,
-                                        'debet_saldo' => Crypt::encryptString($n_deb_saldo2),
-                                        'cred_saldo' => Crypt::encryptString($n_cred_saldo2),
-                                        'created_at' => Carbon::now(),
-                                        'updated_at' => Carbon::now()
-                                        ]);
+            $ledgers_data_2 = array('id_coa' => $acc2,
+                                    'id_desc' => $desc,
+                                    'debet_saldo' => Crypt::encryptString($n_deb_saldo2),
+                                    'cred_saldo' => Crypt::encryptString($n_cred_saldo2),
+                                    'created_at' => Carbon::now(),
+                                    'updated_at' => Carbon::now()
+                                    );
+
+            DB::table('ledgers')->insert($ledgers_data_2);
+
+            //log buku besar (cred acc)
+            $myLog->go('store','',\json_encode($ledgers_data_2),'ledgers');
 
         } else {
             $n_deb_saldo2 = "0";
             $n_cred_saldo2 = (string)$nominal;
 
-            DB::table('ledgers')->insert(['id_coa' => $acc2,
-                                        'id_desc' => $desc,
-                                        'debet_saldo' => Crypt::encryptString($n_deb_saldo2),
-                                        'cred_saldo' => Crypt::encryptString($n_cred_saldo2),
-                                        'created_at' => Carbon::now(),
-                                        'updated_at' => Carbon::now()
-                                        ]);
+            $ledgers_data_2 = array('id_coa' => $acc2,
+                                    'id_desc' => $desc,
+                                    'debet_saldo' => Crypt::encryptString($n_deb_saldo2),
+                                    'cred_saldo' => Crypt::encryptString($n_cred_saldo2),
+                                    'created_at' => Carbon::now(),
+                                    'updated_at' => Carbon::now()
+                                    );
 
+            DB::table('ledgers')->insert($ledgers_data_2);
+
+            //log buku besar (cred acc)
+            $myLog->go('store','',\json_encode($ledgers_data_2),'ledgers');
         }
         
         //insert to neraca saldo
@@ -146,44 +170,67 @@ class projectTransactionController extends Controller
 
         //inputan pertama
         if ($cek_akun_d != null) { 
-            DB::table('trial_balances')->where('id_coa',$cek_gledger->id_debet_acc)->update([
-                'period' => $thn,
-                'id_coa' => $get_ledger_d->id_coa,
-                'id_ledger' => $get_ledger_d->id,
-                'created_at' => $cek_akun_d->created_at,
-                'updated_at' => Carbon::now()
-            ]);
+
+            //data before value log activity
+            $tb_before_value1 = Trial_balance::where('id_coa',$cek_gledger->id_debet_acc)->first();
+            $before_value1 = \json_encode($tb_before_value1);
+
+            $tbalance_data1 = array('period' => $thn,
+                                    'id_coa' => $get_ledger_d->id_coa,
+                                    'id_ledger' => $get_ledger_d->id,
+                                    'created_at' => $cek_akun_d->created_at,
+                                    'updated_at' => Carbon::now()
+                                    );
+
+            DB::table('trial_balances')->where('id_coa',$cek_gledger->id_debet_acc)->update($tbalance_data1);
+    
+            $myLog->go('update',$before_value1,\json_encode($tbalance_data1),'trial_balances');    
+
         } else {
-            DB::table('trial_balances')->insert(['period' => $thn,
-                                        'id_coa' => $get_ledger_d->id_coa,
-                                        'id_ledger' => $get_ledger_d->id,
-                                        'created_at' => Carbon::now(),
-                                        'updated_at' => Carbon::now()
-                                        ]);
+
+            $tbalance_data1 = array('period' => $thn,
+                                    'id_coa' => $get_ledger_d->id_coa,
+                                    'id_ledger' => $get_ledger_d->id,
+                                    'created_at' => Carbon::now(),
+                                    'updated_at' => Carbon::now()
+                                    );
+
+            DB::table('trial_balances')->insert($tbalance_data1);
+
+            $myLog->go('store','',\json_encode($tbalance_data1),'trial_balances');
         }
 
         //inputan kedua
         if ($cek_akun_k != null) {  
-            DB::table('trial_balances')->where('id_coa',$cek_gledger->id_cred_acc)->update([
-                'period' => $thn,
-                'id_coa' => $get_ledger_k->id_coa,
-                'id_ledger' => $get_ledger_k->id,
-                'created_at' => $cek_akun_k->created_at,
-                'updated_at' => Carbon::now()
-            ]);
-        } else {
-            DB::table('trial_balances')->insert(['period' => $thn,
-                                        'id_coa' => $get_ledger_k->id_coa,
-                                        'id_ledger' => $get_ledger_k->id,
-                                        'created_at' => Carbon::now(),
-                                        'updated_at' => Carbon::now()
-                                        ]);
-        }
 
-        // $myLog = new myLog;
-        // $myLog->go('store','',\json_encode($request->all()),'general_ledgers');
-        // $myLog->go('store','',\json_encode($request->all()),'ledgers');
-        // $myLog->go('store','',\json_encode($request->all()),'trial_balances');
+            //data before value log activity
+            $tb_before_value2 = Trial_balance::where('id_coa',$cek_gledger->id_cred_acc)->first();
+            $before_value2 = \json_encode($tb_before_value2);
+            
+            $tbalance_data2 = array('period' => $thn,
+                                    'id_coa' => $get_ledger_k->id_coa,
+                                    'id_ledger' => $get_ledger_k->id,
+                                    'created_at' => $cek_akun_k->created_at,
+                                    'updated_at' => Carbon::now()
+                                    );
+
+            DB::table('trial_balances')->where('id_coa',$cek_gledger->id_cred_acc)->update($tbalance_data2);
+
+            $myLog->go('update',$before_value2,\json_encode($tbalance_data2),'trial_balances');    
+
+        } else {
+
+            $tbalance_data2 = array('period' => $thn,
+                                    'id_coa' => $get_ledger_k->id_coa,
+                                    'id_ledger' => $get_ledger_k->id,
+                                    'created_at' => Carbon::now(),
+                                    'updated_at' => Carbon::now()
+                                    );
+
+            DB::table('trial_balances')->insert($tbalance_data2);
+
+            $myLog->go('store','',\json_encode($tbalance_data2),'trial_balances');
+        }
 
         return redirect()->route('projectTransaction.create')->withStatus(__('Project Transaction successfully added.'));
     }
