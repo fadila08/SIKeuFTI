@@ -100,14 +100,7 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <form action="{{ route('projectTransaction.destroy', $data) }}" method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <a class="dropdown-item" href="{{ route('projectTransaction.edit', $data->id) }}">{{ __('Edit') }}</a>
-                                                        <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this data ?") }}') ? this.parentElement.submit() : ''">
-                                                            {{ __('Delete') }}
-                                                        </button>
-                                                    </form>    
+                                                    <a class="dropdown-item" href="{{ route('projectTransaction.edit', $data->id) }}">{{ __('Edit') }}</a>
                                                 </div>
 
                                             </div>
