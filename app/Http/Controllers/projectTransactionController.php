@@ -17,6 +17,7 @@ use App\Http\Library\myLog;
 use Auth;
 use DB;
 use Carbon\Carbon;
+use Storage;
 
 class projectTransactionController extends Controller
 {
@@ -262,10 +263,11 @@ class projectTransactionController extends Controller
         
         $generalLedger->update($data);
         
+        // dd(['id_coa' => $generalLedger->id_debet_acc , 'id_desc' => $generalLedger->id]);
         //update to buku besar
         //where ledger->id_desc == gledger->id && ledger->id_coa == gledger->id_debet_acc // id_cred_acc
-        $ledger1 = Ledger::where(['id_coa','=',$generalLedger->id_debet_acc],['id_desc','=',$generalLedger->id])->latest()->first();
-        $ledger2 = Ledger::where(['id_coa','=',$generalLedger->id_cred_acc],['id_desc','=',$generalLedger->id])->latest()->first();
+        $ledger1 = Ledger::where(['id_coa' => $generalLedger->id_debet_acc , 'id_desc' => $generalLedger->id])->latest()->first();
+        $ledger2 = Ledger::where(['id_coa' => $generalLedger->id_cred_acc , 'id_desc' => $generalLedger->id])->latest()->first();
                 
         $nominal = (int)$request->get('nominal');
         $nominal_old = (int)Crypt::decryptString($generalLedger->nominal);
@@ -297,8 +299,9 @@ class projectTransactionController extends Controller
                                 'created_at' => $ledger1->created_at,
                                 'updated_at' => Carbon::now()
                                 );
+
         
-        DB::table('ledgers')->where(['id_coa','=',$generalLedger->id_debet_acc],['id_desc','=',$generalLedger->id])->update($ledgers_data_1);
+        DB::table('ledgers')->where(['id_coa' => $generalLedger->id_debet_acc , 'id_desc' => $generalLedger->id])->update($ledgers_data_1);
         
         //log buku besar (deb acc)
         // $myLog->go('store','',\json_encode($ledgers_data_1),'ledgers');
@@ -330,7 +333,7 @@ class projectTransactionController extends Controller
                                 'updated_at' => Carbon::now()
                                 );
         
-        DB::table('ledgers')->where(['id_coa','=',$generalLedger->id_cred_acc],['id_desc','=',$generalLedger->id])->update($ledgers_data_2);
+        DB::table('ledgers')->where(['id_coa' => $generalLedger->id_cred_acc , 'id_desc' => $generalLedger->id])->update($ledgers_data_2);
         
         //log buku besar (cred acc)
         // $myLog->go('store','',\json_encode($ledgers_data_2),'ledgers');

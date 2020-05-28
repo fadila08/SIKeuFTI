@@ -25,7 +25,8 @@ class GeneralLedgerRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this->route('cust'));
+        // dd($this->route('projectTransaction') ?? null);
+        // dd($this->route('projectTransaction'));
         return [
             'date' => [
                 'required'
@@ -40,10 +41,10 @@ class GeneralLedgerRequest extends FormRequest
                 'required'
             ],
             'id_debet_acc' => [
-                'required'
+                $this->route('projectTransaction') ? '' : 'required'
             ],
             'id_cred_acc' => [
-                'required'
+                $this->route('projectTransaction') ? '' : 'required'
             ],
             'nominal' => [
                 'required'
