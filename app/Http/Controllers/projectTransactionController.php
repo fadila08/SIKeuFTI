@@ -251,6 +251,9 @@ class projectTransactionController extends Controller
         //update hanya berlaku untuk field yg terakhir di entri
         //update to jurnal umum
         $generalLedger = General_ledger::findOrFail($id);
+        //get nominal old
+        $nominal_old = Crypt::decryptString($generalLedger->nominal);
+        $nominal_old = (int)$nominal_old;
 
         Storage::delete($generalLedger->upload_proof);
 
@@ -263,15 +266,13 @@ class projectTransactionController extends Controller
         
         $generalLedger->update($data);
         
-        // dd(['id_coa' => $generalLedger->id_debet_acc , 'id_desc' => $generalLedger->id]);
         //update to buku besar
         //where ledger->id_desc == gledger->id && ledger->id_coa == gledger->id_debet_acc // id_cred_acc
         $ledger1 = Ledger::where(['id_coa' => $generalLedger->id_debet_acc , 'id_desc' => $generalLedger->id])->latest()->first();
         $ledger2 = Ledger::where(['id_coa' => $generalLedger->id_cred_acc , 'id_desc' => $generalLedger->id])->latest()->first();
                 
         $nominal = (int)$request->get('nominal');
-        $nominal_old = (int)Crypt::decryptString($generalLedger->nominal);
-
+        
         //inputan pertama (deb acc)
         $deb_saldo1 = Crypt::decryptString($ledger1->debet_saldo);
         $deb_saldo1 = (int)$deb_saldo1;
@@ -299,7 +300,6 @@ class projectTransactionController extends Controller
                                 'created_at' => $ledger1->created_at,
                                 'updated_at' => Carbon::now()
                                 );
-
         
         DB::table('ledgers')->where(['id_coa' => $generalLedger->id_debet_acc , 'id_desc' => $generalLedger->id])->update($ledgers_data_1);
         
