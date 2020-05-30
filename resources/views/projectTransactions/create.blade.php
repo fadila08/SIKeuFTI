@@ -123,7 +123,45 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-success mt-4" data-toggle="modal" data-target="#exampleModal">{{ __('Save') }}</button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="exampleModalLabel">Pastikan data sudah benar sebelum disimpan !</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-left">
+                                            <h5>Project name :</h5>
+                                            <h5 class="text-muted">{{\Request::get('nominal')}}</h5>
+                                            <br>
+                                            <h5>Date :</h5>                                            
+                                            <br>
+                                            <h5>Description :</h5>                                            
+                                            <br>
+                                            <h5>Proof Number :</h5>                                            
+                                            <br>
+                                            <h5>Proof :</h5>                                            
+                                            <br>
+                                            <h5>Debet Account :</h5>                                            
+                                            <br>
+                                            <h5>Credit Account :</h5>                                            
+                                            <br>
+                                            <h5>Nominal :</h5>                                            
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary mt-4" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                            <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <!-- <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button> -->
                                 </div>
                             </div>
                         </form>
