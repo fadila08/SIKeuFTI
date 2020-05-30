@@ -280,13 +280,13 @@ class projectTransactionController extends Controller
         $cred_saldo1 = (int)$cred_saldo1;
                             
         if ($deb_saldo1 != 0) {
-            $n_deb_saldo1 = $deb_saldo1-$nominal_old+$nominal;
+            $n_deb_saldo1 = ($deb_saldo1-$nominal_old)+$nominal;
             $n_deb_saldo1 = (string)$n_deb_saldo1;    
         } else {
             $n_deb_saldo1 = "0";
         }
         if($cred_saldo1 != 0) {
-            $n_cred_saldo1 = $cred_saldo1-$nominal_old+$nominal;
+            $n_cred_saldo1 = ($cred_saldo1+$nominal_old)-$nominal;
             $n_cred_saldo1 = (string)$n_cred_saldo1;    
         }
         else {
@@ -313,13 +313,13 @@ class projectTransactionController extends Controller
         $cred_saldo2 = (int)$cred_saldo2;
                 
         if ($cred_saldo2 != 0) {
-            $n_cred_saldo2 = $cred_saldo2-$nominal_old+$nominal;
+            $n_cred_saldo2 = ($cred_saldo2-$nominal_old)+$nominal;
             $n_cred_saldo2 = (string)$n_cred_saldo2;    
         } else {
             $n_cred_saldo2 = "0";
         }
         if ($deb_saldo2 != 0) {
-            $n_deb_saldo2 = $deb_saldo2-$nominal_old+$nominal;
+            $n_deb_saldo2 = ($deb_saldo2+$nominal_old)-$nominal;
             $n_deb_saldo2 = (string)$n_deb_saldo2;    
         } else {
             $n_deb_saldo2 = "0";
@@ -377,6 +377,7 @@ class projectTransactionController extends Controller
         // $myLog->go('update',$before_value2,\json_encode($tbalance_data2),'trial_balances');    
 
         return redirect()->route('generalLedger.index')->withStatus(__('Project Transaction successfully updated.'));
+        // dd([$data], [$ledgers_data_1], [$ledgers_data_2], [$tbalance_data1], [$tbalance_data2]);
     }
 
 }

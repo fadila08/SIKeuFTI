@@ -43,18 +43,18 @@
                                                 @if ($item->id_coa != $item->desc->id_debet_acc)
                                                     {{ ('0') }}
                                                 @else
-                                                    {{ \Crypt::decryptString($item->desc->nominal) }}
+                                                    {{ Crypt::decryptString($item->desc->nominal) }}
                                                 @endif
                                             </td>
                                             <td>
                                                 @if ($item->id_coa != $item->desc->id_cred_acc)
                                                     {{ ('0') }}
                                                 @else
-                                                    {{ \Crypt::decryptString($item->desc->nominal) }}
+                                                    {{ Crypt::decryptString($item->desc->nominal) }}
                                                 @endif
                                             </td>
-                                            <td>{{ \Crypt::decryptString($item->debet_saldo) }}</td>
-                                            <td>{{ \Crypt::decryptString($item->cred_saldo) }}</td>
+                                            <td>{{ Crypt::decryptString($item->debet_saldo) }}</td>
+                                            <td>{{ Crypt::decryptString($item->cred_saldo) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
