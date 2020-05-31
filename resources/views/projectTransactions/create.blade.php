@@ -34,7 +34,7 @@
                             <div class="pl-lg-4">
                                 <div class="form-group{{ $errors->has('id_project') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-id-project">{{ __('Project') }}</label>
-                                    <select class="form-control form-control-alternative{{ $errors->has('id_project') ? ' is-invalid' : '' }}" name="id_project">
+                                    <select class="form-control form-control-alternative{{ $errors->has('id_project') ? ' is-invalid' : '' }}" name="id_project" id="id_project">
                                         <option selected disabled>Choose one</option>
                                         @foreach ($project as $row)
                                             <option value="{{$row['id']}}">
@@ -124,7 +124,7 @@
 
                                 <div class="text-center">
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-success mt-4" data-toggle="modal" data-target="#exampleModal">{{ __('Save') }}</button>
+                                    <button type="button" class="btn btn-success mt-4" data-toggle="modal" data-target="#exampleModal" onclick="showProjectTransaction()">{{ __('Save') }}</button>
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,14 +138,12 @@
                                         </div>
                                         <div class="modal-body text-left">
                                             <h5>Project name :</h5>
-                                            <h5 class="text-muted" id="nom_value">
-                                                <script>
-                                                    var nom = document.getElementById("input-nominal").value;
-                                                    document.getElementById("nom_value").innerHTML = "nom";                                                   
-                                                </script>                                                
+                                            <h5 class="text-muted" id="project_value">                                        
                                             </h5>
                                             <br>
-                                            <h5>Date :</h5>                                            
+                                            <h5>Date :</h5>        
+                                            <h5 class="text-muted" id="date_value">                                        
+                                            </h5>                                    
                                             <br>
                                             <h5>Description :</h5>                                            
                                             <br>
@@ -174,7 +172,7 @@
                 </div>
             </div>
         </div>
-        
+    <script src="{{asset('/js/custom.js')}}"></script>
         @include('layouts.footers.auth')
     </div>
 @endsection
