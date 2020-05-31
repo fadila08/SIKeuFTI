@@ -274,6 +274,10 @@ class projectTransactionController extends Controller
         //update to buku besar
         //where ledger->id_desc == gledger->id && ledger->id_coa == gledger->id_debet_acc // id_cred_acc
         $ledger1 = Ledger::where(['id_coa' => $generalLedger->id_debet_acc , 'id_desc' => $generalLedger->id])->latest()->first();
+        //ambil data credit saldo sebelum terakhir
+        $ledger1_before = Ledger::where(['id_coa' => $generalLedger->id_debet_acc ])->get();
+        $ledger1_before = $ledger1_before[count($ledger1_before)-2];      
+
         $ledger2 = Ledger::where(['id_coa' => $generalLedger->id_cred_acc , 'id_desc' => $generalLedger->id])->latest()->first();
         
         //ambil data debet saldo sebelum terakhir
@@ -282,23 +286,38 @@ class projectTransactionController extends Controller
         
         
         //inputan pertama (deb acc)
-        $deb_saldo1 = Crypt::decryptString($ledger1->debet_saldo);
+        $deb_saldo1 = Crypt::decryptString($ledger1_before->debet_saldo);
         $deb_saldo1 = (int)$deb_saldo1;
 
-        $cred_saldo1 = Crypt::decryptString($ledger1->cred_saldo);
+        $cred_saldo1 = Crypt::decryptString($ledger1_before->cred_saldo);
         $cred_saldo1 = (int)$cred_saldo1;
 
 
                            
-        //cek debet kredit
-        if ($deb_saldo1 != 0) {
-            $n_deb_saldo1 = ($deb_saldo1-$nominal_old)+$nominal;
+        // //cek debet kredit
+        // if ($deb_saldo1 != 0) {
+        //     $n_deb_saldo1 = ($deb_saldo1-$nominal_old)+$nominal;
+        //     $n_deb_saldo1 = (string)$n_deb_saldo1;    
+        // } else {
+        //     $n_deb_saldo1 = "0";
+        // }
+        // if($cred_saldo1 != 0) {
+        //     $n_cred_saldo1 = ($cred_saldo1+$nominal_old)-$nominal;
+        //     $n_cred_saldo1 = (string)$n_cred_saldo1;    
+        // }
+        // else {
+        //     $n_cred_saldo1 = "0";
+        // }
+
+         //cek debet kredit
+         if ($deb_saldo1 != 0) {
+            $n_deb_saldo1 = ($deb_saldo1)+$nominal;
             $n_deb_saldo1 = (string)$n_deb_saldo1;    
         } else {
             $n_deb_saldo1 = "0";
         }
         if($cred_saldo1 != 0) {
-            $n_cred_saldo1 = ($cred_saldo1+$nominal_old)-$nominal;
+            $n_cred_saldo1 = ($cred_saldo1)-$nominal;
             $n_cred_saldo1 = (string)$n_cred_saldo1;    
         }
         else {
