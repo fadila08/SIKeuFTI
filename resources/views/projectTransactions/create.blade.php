@@ -138,7 +138,12 @@
                                         </div>
                                         <div class="modal-body text-left">
                                             <h5>Project name :</h5>
-                                            <h5 class="text-muted">{{\Request::get('nominal')}}</h5>
+                                            <h5 class="text-muted" id="nom_value">
+                                                <script>
+                                                    var nom = document.getElementById("input-nominal").value;
+                                                    document.getElementById("nom_value").innerHTML = "nom";                                                   
+                                                </script>                                                
+                                            </h5>
                                             <br>
                                             <h5>Date :</h5>                                            
                                             <br>

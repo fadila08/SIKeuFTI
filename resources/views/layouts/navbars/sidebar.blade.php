@@ -178,7 +178,8 @@
                         <i class="ni ni-collection text-primary-fti"></i> {{ __('Neraca Saldo') }}
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- sementara hide dulu (dgn metode puzzle scrum) -->
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-key-25 text-info"></i> {{ __('Jurnal Penyesuaian') }}
                     </a>
@@ -207,11 +208,6 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-                <!-- <li class="nav-item mb-5" style="position: absolute; bottom: 0;">
-                    <a class="nav-link" href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" target="_blank">
-                        <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
-                    </a>
                 </li> -->
             </ul>
 
@@ -262,7 +258,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples4" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples4">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
+                        <i class="ni ni-settings text-primary-fti"></i>
                         <span class="nav-link-text" style="color: rgba(0, 0, 0, .5);">{{ __('Kelola Akun') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-examples4">
