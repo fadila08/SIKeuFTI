@@ -251,15 +251,20 @@ class projectTransactionController extends Controller
         //update hanya berlaku untuk field yg terakhir di entri
         //update to jurnal umum
         $generalLedger = General_ledger::findOrFail($id);
+
         //get nominal old
         $nominal_old = Crypt::decryptString($generalLedger->nominal);
         $nominal_old = (int)$nominal_old;
+
+        // dd($generalLedger,$nominal_old);
+        $nominal = (int)$request->get('nominal');
 
         Storage::delete($generalLedger->upload_proof);
 
         $proof = $request->file('upload_proof')->store('proof_transactions');
 
         //di exclude dulu upload proofnya
+
         $data = $request->merge(['nominal' => Crypt::encryptString($request->get('nominal'))])->except('upload_proof');
         //ditambah secara manual
         $data['upload_proof'] = $proof;
@@ -270,15 +275,22 @@ class projectTransactionController extends Controller
         //where ledger->id_desc == gledger->id && ledger->id_coa == gledger->id_debet_acc // id_cred_acc
         $ledger1 = Ledger::where(['id_coa' => $generalLedger->id_debet_acc , 'id_desc' => $generalLedger->id])->latest()->first();
         $ledger2 = Ledger::where(['id_coa' => $generalLedger->id_cred_acc , 'id_desc' => $generalLedger->id])->latest()->first();
-                
-        $nominal = (int)$request->get('nominal');
+        
+        //ambil data debet saldo sebelum terakhir
+        $ledger2_before = Ledger::where(['id_coa' => $generalLedger->id_cred_acc ])->get();
+        $ledger2_before = $ledger2_before[count($ledger2_before)-2];                
+        
         
         //inputan pertama (deb acc)
         $deb_saldo1 = Crypt::decryptString($ledger1->debet_saldo);
         $deb_saldo1 = (int)$deb_saldo1;
+
         $cred_saldo1 = Crypt::decryptString($ledger1->cred_saldo);
         $cred_saldo1 = (int)$cred_saldo1;
-                            
+
+
+                           
+        //cek debet kredit
         if ($deb_saldo1 != 0) {
             $n_deb_saldo1 = ($deb_saldo1-$nominal_old)+$nominal;
             $n_deb_saldo1 = (string)$n_deb_saldo1;    
@@ -293,6 +305,7 @@ class projectTransactionController extends Controller
             $n_cred_saldo1 = "0";
         }
                     
+
         $ledgers_data_1 = array('id_coa' => $ledger1->id_coa,
                                 'id_desc' => $ledger1->id_desc,
                                 'debet_saldo' => Crypt::encryptString($n_deb_saldo1),
@@ -307,23 +320,40 @@ class projectTransactionController extends Controller
         // $myLog->go('store','',\json_encode($ledgers_data_1),'ledgers');
         
         //inputan kedua (cred acc)
-        $deb_saldo2 = Crypt::decryptString($ledger2->debet_saldo);
+        $deb_saldo2 = Crypt::decryptString($ledger2_before->debet_saldo);
         $deb_saldo2 = (int)$deb_saldo2;
-        $cred_saldo2 = Crypt::decryptString($ledger2->cred_saldo);
+        $cred_saldo2 = Crypt::decryptString($ledger2_before->cred_saldo);
         $cred_saldo2 = (int)$cred_saldo2;
                 
+        // if ($cred_saldo2 != 0) {
+        //     $n_cred_saldo2 = ($cred_saldo2-$nominal_old)+$nominal;
+        //     $n_cred_saldo2 = (string)$n_cred_saldo2;    
+        // } else {
+        //     $n_cred_saldo2 = "0";
+        // }
+        // if ($deb_saldo2 != 0) {
+        //     $n_deb_saldo2 = ($deb_saldo2+$nominal_old)-$nominal;
+        //     $n_deb_saldo2 = (string)$n_deb_saldo2;    
+        // } else {
+        //     $n_deb_saldo2 = "0";
+        // }
+
         if ($cred_saldo2 != 0) {
-            $n_cred_saldo2 = ($cred_saldo2-$nominal_old)+$nominal;
+            $n_cred_saldo2 = ($cred_saldo2)+$nominal;
             $n_cred_saldo2 = (string)$n_cred_saldo2;    
         } else {
             $n_cred_saldo2 = "0";
         }
+        
         if ($deb_saldo2 != 0) {
-            $n_deb_saldo2 = ($deb_saldo2+$nominal_old)-$nominal;
+            $n_deb_saldo2 = ($deb_saldo2)-$nominal;
             $n_deb_saldo2 = (string)$n_deb_saldo2;    
         } else {
             $n_deb_saldo2 = "0";
         }
+
+        // dd($n_deb_saldo2,$n_cred_saldo2,$deb_saldo2,$nominal_old, $nominal);
+
         
         $ledgers_data_2 = array('id_coa' => $ledger2->id_coa,
                                 'id_desc' => $ledger2->id_desc,
