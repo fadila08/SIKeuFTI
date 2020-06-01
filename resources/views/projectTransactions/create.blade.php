@@ -89,7 +89,7 @@
 
                                 <div class="form-group{{ $errors->has('id_debet_acc') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-id-debet-acc">{{ __('Debet Account') }}</label>
-                                    <select class="form-control form-control-alternative{{ $errors->has('id_debet_acc') ? ' is-invalid' : '' }}" name="id_debet_acc">
+                                    <select class="form-control form-control-alternative{{ $errors->has('id_debet_acc') ? ' is-invalid' : '' }}" name="id_debet_acc" id="id_debet_acc">
                                         <option selected disabled>Choose one</option>
                                         @foreach ($coa as $row)
                                             <option value="{{$row['id']}}">
@@ -101,7 +101,7 @@
 
                                 <div class="form-group{{ $errors->has('id_cred_acc') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-id-cred-acc">{{ __('Credit Account') }}</label>
-                                    <select class="form-control form-control-alternative{{ $errors->has('id_cred_acc') ? ' is-invalid' : '' }}" name="id_cred_acc">
+                                    <select class="form-control form-control-alternative{{ $errors->has('id_cred_acc') ? ' is-invalid' : '' }}" name="id_cred_acc" id="id_cred_acc">
                                         <option selected disabled>Choose one</option>
                                         @foreach ($coa as $row)
                                             <option value="{{$row['id']}}">
@@ -138,24 +138,25 @@
                                         </div>
                                         <div class="modal-body text-left">
                                             <h5>Project name :</h5>
-                                            <h5 class="text-muted" id="project_value">                                        
-                                            </h5>
+                                            <h5 class="text-muted" id="project_value"></h5>
                                             <br>
                                             <h5>Date :</h5>        
-                                            <h5 class="text-muted" id="date_value">                                        
-                                            </h5>                                    
+                                            <h5 class="text-muted" id="date_value"></h5>                                    
                                             <br>
                                             <h5>Description :</h5>                                            
+                                            <h5 class="text-muted" id="desc_value"></h5>                                    
                                             <br>
                                             <h5>Proof Number :</h5>                                            
-                                            <br>
-                                            <h5>Proof :</h5>                                            
+                                            <h5 class="text-muted" id="proof_num_value"></h5>                                    
                                             <br>
                                             <h5>Debet Account :</h5>                                            
+                                            <h5 class="text-muted" id="debet_acc_value"></h5>                                    
                                             <br>
                                             <h5>Credit Account :</h5>                                            
+                                            <h5 class="text-muted" id="cred_acc_value"></h5>                                    
                                             <br>
                                             <h5>Nominal :</h5>                                            
+                                            <h5 class="text-muted" id="nominal_value"></h5>                                    
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary mt-4" data-dismiss="modal">{{ __('Cancel') }}</button>
