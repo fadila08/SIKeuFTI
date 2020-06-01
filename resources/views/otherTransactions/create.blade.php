@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('projectTransaction.store') }}" autocomplete="off" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('otherTransaction.store') }}" autocomplete="off" enctype="multipart/form-data">
                             @csrf
                             
                             <h6 class="heading-small text-muted mb-4">{{ __('Transaction') }}</h6>
@@ -77,7 +77,7 @@
 
                                 <div class="form-group{{ $errors->has('id_debet_acc') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-id-debet-acc">{{ __('Debet Account') }}</label>
-                                    <select class="form-control form-control-alternative{{ $errors->has('id_debet_acc') ? ' is-invalid' : '' }}" name="id_debet_acc">
+                                    <select class="form-control form-control-alternative{{ $errors->has('id_debet_acc') ? ' is-invalid' : '' }}" name="id_debet_acc" id="id_debet_acc">
                                         <option selected disabled>Choose one</option>
                                         @foreach ($coa as $row)
                                             <option value="{{$row['id']}}">
@@ -89,7 +89,7 @@
 
                                 <div class="form-group{{ $errors->has('id_cred_acc') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-id-cred-acc">{{ __('Credit Account') }}</label>
-                                    <select class="form-control form-control-alternative{{ $errors->has('id_cred_acc') ? ' is-invalid' : '' }}" name="id_cred_acc">
+                                    <select class="form-control form-control-alternative{{ $errors->has('id_cred_acc') ? ' is-invalid' : '' }}" name="id_cred_acc" id="id_cred_acc">
                                         <option selected disabled>Choose one</option>
                                         @foreach ($coa as $row)
                                             <option value="{{$row['id']}}">
@@ -111,7 +111,45 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-success mt-4" data-toggle="modal" data-target="#otherTxModal" onclick="showOtherTransaction()">{{ __('Save') }}</button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="otherTxModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="exampleModalLabel">Pastikan data sudah benar sebelum disimpan !</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-left">
+                                            <h5>Date :</h5>        
+                                            <h5 class="text-muted" id="date_value"></h5>                                    
+                                            <br>
+                                            <h5>Description :</h5>                                            
+                                            <h5 class="text-muted" id="desc_value"></h5>                                    
+                                            <br>
+                                            <h5>Proof Number :</h5>                                            
+                                            <h5 class="text-muted" id="proof_num_value"></h5>                                    
+                                            <br>
+                                            <h5>Debet Account :</h5>                                            
+                                            <h5 class="text-muted" id="debet_acc_value"></h5>                                    
+                                            <br>
+                                            <h5>Credit Account :</h5>                                            
+                                            <h5 class="text-muted" id="cred_acc_value"></h5>                                    
+                                            <br>
+                                            <h5>Nominal :</h5>                                            
+                                            <h5 class="text-muted" id="nominal_value"></h5>                                    
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary mt-4" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                            <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -119,7 +157,7 @@
                 </div>
             </div>
         </div>
-        
+        <script src="{{asset('/js/custom.js')}}"></script>
         @include('layouts.footers.auth')
     </div>
 @endsection

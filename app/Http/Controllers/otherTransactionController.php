@@ -230,6 +230,6 @@ class otherTransactionController extends Controller
             $myLog->go('store','',\json_encode($tbalance_data2),'trial_balances');
         }
 
-        return redirect()->route('projectTransaction.create')->withStatus(__('Project Transaction successfully added.'));
+        return redirect()->route('otherTransaction.create')->withStatus(__('Transaction successfully added.'));
     }
 }
