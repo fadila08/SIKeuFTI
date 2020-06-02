@@ -100,7 +100,9 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="{{ route('projectTransaction.edit', $data->id) }}">{{ __('Edit') }}</a>
+                                                    @if ($data->id == $lastId)
+                                                        <a class="dropdown-item" href="{{ route('projectTransaction.edit', $data->id) }}">{{ __('Edit') }}</a>
+                                                    @endif
                                                 </div>
 
                                             </div>

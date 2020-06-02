@@ -256,7 +256,6 @@ class projectTransactionController extends Controller
         $nominal_old = Crypt::decryptString($generalLedger->nominal);
         $nominal_old = (int)$nominal_old;
 
-        // dd($generalLedger,$nominal_old);
         $nominal = (int)$request->get('nominal');
 
         Storage::delete($generalLedger->upload_proof);
@@ -264,7 +263,6 @@ class projectTransactionController extends Controller
         $proof = $request->file('upload_proof')->store('proof_transactions');
 
         //di exclude dulu upload proofnya
-
         $data = $request->merge(['nominal' => Crypt::encryptString($request->get('nominal'))])->except('upload_proof');
         //ditambah secara manual
         $data['upload_proof'] = $proof;
@@ -274,6 +272,7 @@ class projectTransactionController extends Controller
         //update to buku besar
         //where ledger->id_desc == gledger->id && ledger->id_coa == gledger->id_debet_acc // id_cred_acc
         $ledger1 = Ledger::where(['id_coa' => $generalLedger->id_debet_acc , 'id_desc' => $generalLedger->id])->latest()->first();
+
         //ambil data credit saldo sebelum terakhir
         $ledger1_before = Ledger::where(['id_coa' => $generalLedger->id_debet_acc ])->get();
         $ledger1_before = $ledger1_before[count($ledger1_before)-2];      
@@ -282,8 +281,7 @@ class projectTransactionController extends Controller
         
         //ambil data debet saldo sebelum terakhir
         $ledger2_before = Ledger::where(['id_coa' => $generalLedger->id_cred_acc ])->get();
-        $ledger2_before = $ledger2_before[count($ledger2_before)-2];                
-        
+        $ledger2_before = $ledger2_before[count($ledger2_before)-2];                        
         
         //inputan pertama (deb acc)
         $deb_saldo1 = Crypt::decryptString($ledger1_before->debet_saldo);
@@ -291,8 +289,6 @@ class projectTransactionController extends Controller
 
         $cred_saldo1 = Crypt::decryptString($ledger1_before->cred_saldo);
         $cred_saldo1 = (int)$cred_saldo1;
-
-
                            
         // //cek debet kredit
         // if ($deb_saldo1 != 0) {
@@ -324,7 +320,6 @@ class projectTransactionController extends Controller
             $n_cred_saldo1 = "0";
         }
                     
-
         $ledgers_data_1 = array('id_coa' => $ledger1->id_coa,
                                 'id_desc' => $ledger1->id_desc,
                                 'debet_saldo' => Crypt::encryptString($n_deb_saldo1),
@@ -370,9 +365,6 @@ class projectTransactionController extends Controller
         } else {
             $n_deb_saldo2 = "0";
         }
-
-        // dd($n_deb_saldo2,$n_cred_saldo2,$deb_saldo2,$nominal_old, $nominal);
-
         
         $ledgers_data_2 = array('id_coa' => $ledger2->id_coa,
                                 'id_desc' => $ledger2->id_desc,

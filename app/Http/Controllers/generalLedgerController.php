@@ -23,10 +23,15 @@ class generalLedgerController extends Controller
 
     public function index(General_ledger $data)
     {
+        $lastData = General_ledger::orderBy('id', 'DESC')->first();
+        $data['lastId'] = $lastData->id;
+
+        $data['generalLedgers'] = $data->paginate(15);
+
         $myLog = new myLog;
         $myLog->go('show','','','general_ledgers');
 
-        return view('generalLedgers.index', ['generalLedgers' => $data->paginate(15)]);
+        return view('generalLedgers.index', $data);
     }
 
 }

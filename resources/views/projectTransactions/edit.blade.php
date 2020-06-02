@@ -1,7 +1,7 @@
-@extends('layouts.app', ['title' => __('Project Transaction')])
+@extends('layouts.app', ['title' => __('Transaction')])
 
 @section('content')
-    @include('projectTransactions.partials.header', ['title' => __('Edit Project Transaction')])   
+    @include('projectTransactions.partials.header', ['title' => __('Edit Transaction')])   
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -21,7 +21,7 @@
                             @csrf
                             @method('put')
 
-                            <h6 class="heading-small text-muted mb-4">{{ __('Project Transaction') }}</h6>
+                            <h6 class="heading-small text-muted mb-4">{{ __('Transaction Data') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="form-group{{ $errors->has('id_project') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-id-project">{{ __('Project') }}</label>
