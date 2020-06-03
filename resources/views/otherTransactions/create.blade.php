@@ -32,6 +32,20 @@
                             
                             <h6 class="heading-small text-muted mb-4">{{ __('Transaction') }}</h6>
                             <div class="pl-lg-4">
+                                <div class="form-group{{ $errors->has('id_creditor') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-id-creditor">{{ __('Creditor') }}</label>
+                                    <br>
+                                    <label class="form-control-label text-muted" for="input-id-creditor-note">{{ __('pilih kreditur jika melakukan transaksi hutang') }}</label>
+                                    <select class="form-control form-control-alternative{{ $errors->has('id_creditor') ? ' is-invalid' : '' }}" name="id_creditor" id="id_creditor">
+                                        <option selected disabled>Choose one</option>
+                                        @foreach ($creditor as $row)
+                                            <option value="{{$row['id']}}">
+                                                {{$row['cred_name']}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div class="form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-date">{{ __('Date') }}</label>
                                     <div class="input-group input-group-alternative">
@@ -125,6 +139,9 @@
                                             </button>
                                         </div>
                                         <div class="modal-body text-left">
+                                            <h5>Creditor :</h5>        
+                                            <h5 class="text-muted" id="creditor_value"></h5>                                    
+                                            <br>
                                             <h5>Date :</h5>        
                                             <h5 class="text-muted" id="date_value"></h5>                                    
                                             <br>

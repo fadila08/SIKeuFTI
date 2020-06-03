@@ -11,6 +11,7 @@ use App\General_ledger;
 use App\Ledger;
 use App\Trial_balance;
 use App\Coa;
+use App\Creditor;
 use App\Project;
 use App\Http\Library\myLog;
 use Auth;
@@ -22,8 +23,9 @@ class otherTransactionController extends Controller
     public function create()
     {
         $coa = Coa::get();
+        $creditor = Creditor::get();
 
-        return view('otherTransactions.create', compact('coa'));
+        return view('otherTransactions.create', compact('coa','creditor'));
     }
 
     public function store(GeneralLedgerRequest $request, General_ledger $model)

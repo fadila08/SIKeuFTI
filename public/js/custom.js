@@ -34,6 +34,11 @@ function showProjectTransaction() {
 }
 
 function showOtherTransaction() {
+  //untuk nama kreditur
+  var data_creditor = document.getElementById("id_creditor");
+  var text_creditor = data_creditor.options[data_creditor.selectedIndex].text;
+  $("#creditor_value").text(text_creditor);                                                 
+
   //untuk tanggal
   var data_date = document.getElementById("input-date").value;
   // console.log(text_project);
