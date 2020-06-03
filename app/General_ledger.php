@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Coa;
 use App\Project;
+use App\Creditor;
 
 class General_ledger extends Model
 {
@@ -24,5 +25,10 @@ class General_ledger extends Model
     public function credAcc()
     {
         return $this->belongsTo(\App\Coa::class, 'id_cred_acc');
+    }
+
+    public function creditor()
+    {
+        return $this->belongsTo(\App\Creditor::class, 'id_creditor');
     }
 }

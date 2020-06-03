@@ -17,6 +17,7 @@ class CreateGeneralLedgersTable extends Migration
             $table->bigIncrements('id');
             $table->date('date');
             $table->unsignedBigInteger('id_project');
+            $table->unsignedBigInteger('id_creditor');
             $table->string('description');
             $table->string('proof_num');
             $table->string('upload_proof')->nullable()->default(null);
@@ -26,6 +27,7 @@ class CreateGeneralLedgersTable extends Migration
             $table->timestamps();
 
             $table->foreign('id_project')->references('id')->on('projects');
+            $table->foreign('id_creditor')->references('id')->on('creditors');
             $table->foreign('id_debet_acc')->references('id')->on('Coas');
             $table->foreign('id_cred_acc')->references('id')->on('Coas');
         });
