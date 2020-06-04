@@ -12,6 +12,7 @@ class Acc_payable extends Model
 
     public function transaction()
     {
-        return $this->belongsTo(\App\General_ledger::class, 'id_transaction');
+        // return $this->belongsTo(\App\General_ledger::class, 'id_transaction');
+        return $this->hasOne('App\General_ledger','id','id_transaction');
     }
 }

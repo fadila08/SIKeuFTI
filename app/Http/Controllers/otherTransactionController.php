@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Requests\GeneralLedgerRequest;
+use Illuminate\Database\Eloquent\Builder;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\General_ledger;
@@ -22,6 +24,8 @@ use Carbon\Carbon;
 
 class otherTransactionController extends Controller
 {
+    private $id_creditor = "";
+
     public function create()
     {
         $coa = Coa::get();
@@ -244,11 +248,17 @@ class otherTransactionController extends Controller
         if ($transaction->id_creditor != NULL) {
             //get semua coa yang termasuk akun akun kewajiban/hutang
             $acc_group = Account_group::where('group_name','Kewajiban')->first();
+
             $cred_coa = Coa::where('id_account_group',$acc_group->id)->get(); 
 
             //get data acc payable terakhir yang id creditornya sama dgn id creditor inputan
-            $last_acc_payable = Acc_payable::where('transaction->id_creditor',$transaction->id_creditor)->latest()->first();
-            dd($cred_coa, $last_acc_payable);
+            $this->id_creditor = $transaction->id_creditor;
+
+            //variabel $this->id_creditor harus diinisialisasi di variabel global, kalau tidak dia tidak terdeteksi di fungsi builder dibawah ini
+            $last_acc_payable = Acc_payable::with('transaction')->whereHas('transaction', function (Builder $query) {
+                $query->where('id_creditor','=',$this->id_creditor);
+            })->latest()->first();
+            dd($cred_coa, $last_acc_payable );
             
             //jika $transaction->credit_acc = akun akun utang
             // if ($transaction->id_cred_acc == $cred_coa) {
