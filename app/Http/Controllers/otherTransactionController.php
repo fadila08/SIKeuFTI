@@ -275,6 +275,7 @@ class otherTransactionController extends Controller
                     } else {
                         $rem_debt = $debet;
                     }
+                break;
 
                 } else {
                     $nilai = "false";
@@ -293,8 +294,7 @@ class otherTransactionController extends Controller
 
                 }
             }
-            dd($nilai);
-            // dd($cred_coa, $last_acc_payable, $paydate, $debet, $credit, $rem_debt );
+            dd($cred_coa, $last_acc_payable, $paydate, $debet, $credit, $rem_debt );
 
             // $accPayable_data = array('id_transaction' => $transaction->id,
             //                         'pay_date' => $paydate,
