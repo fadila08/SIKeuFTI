@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AccPayableRequest;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Builder;
+
 use Illuminate\Support\Str;
 use App\General_ledger;
 use App\Acc_payable;
@@ -23,15 +25,20 @@ class AccPayableController extends Controller
 
     public function index(Acc_payable $data)
     {
-        $transaction = General_ledger::get();
+        // $transaction = General_ledger::get();
 
         // $this->id_creditor = $transaction->id_creditor;
 
-        // $data = Acc_payable::with('transaction')->whereHas('transaction', function (Builder $query) {
-        //                     $query->groupBy($this->id_creditor);
-        //                     })->get();
+
+
+        $data = Acc_payable::with(['transaction' => function($query){
+            $query->groupBy('id_creditor');
+        }])->get();
+
+        dd( $data);
+
         
-        $data = Acc_payable::with('transaction')->get()->groupBy('transaction->id_creditor'); 
+        // $data = Acc_payable::with('transaction')->get()->groupBy('transaction->id_creditor'); 
        
         $myLog = new myLog;
         $myLog->go('show','','','acc_payable');
