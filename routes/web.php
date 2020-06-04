@@ -52,6 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('Ledger', 'LedgerController', ['except' => ['show']]);
 	//neraca saldo
 	Route::resource('trialBalance', 'trialBalanceController', ['except' => ['show']]);
+	//acc payable
+	Route::resource('accPayable', 'AccPayableController', ['except' => ['show']]);
 
 
 

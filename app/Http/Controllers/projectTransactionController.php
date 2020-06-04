@@ -13,6 +13,8 @@ use App\Ledger;
 use App\Trial_balance;
 use App\Coa;
 use App\Project;
+use App\Creditor;
+use App\Acc_payable;
 use App\Http\Library\myLog;
 use Auth;
 use DB;
@@ -242,8 +244,9 @@ class projectTransactionController extends Controller
         $project = Project::where('id','=',$generalLedger->id_project)->get();
         $coa_deb = Coa::where('id','=',$generalLedger->id_debet_acc)->get();
         $coa_cred = Coa::where('id','=',$generalLedger->id_cred_acc)->get();
+        $creditor = Creditor::where('id','=',$generalLedger->id_creditor)->get();
 
-        return view('projectTransactions.edit', compact('generalLedger','project','coa_deb','coa_cred'));
+        return view('projectTransactions.edit', compact('generalLedger','project','coa_deb','coa_cred','creditor'));
     }
 
     public function update(GeneralLedgerRequest $request, $id='')
@@ -290,23 +293,8 @@ class projectTransactionController extends Controller
         $cred_saldo1 = Crypt::decryptString($ledger1_before->cred_saldo);
         $cred_saldo1 = (int)$cred_saldo1;
                            
-        // //cek debet kredit
-        // if ($deb_saldo1 != 0) {
-        //     $n_deb_saldo1 = ($deb_saldo1-$nominal_old)+$nominal;
-        //     $n_deb_saldo1 = (string)$n_deb_saldo1;    
-        // } else {
-        //     $n_deb_saldo1 = "0";
-        // }
-        // if($cred_saldo1 != 0) {
-        //     $n_cred_saldo1 = ($cred_saldo1+$nominal_old)-$nominal;
-        //     $n_cred_saldo1 = (string)$n_cred_saldo1;    
-        // }
-        // else {
-        //     $n_cred_saldo1 = "0";
-        // }
-
-         //cek debet kredit
-         if ($deb_saldo1 != 0) {
+        //cek debet kredit
+        if ($deb_saldo1 != 0) {
             $n_deb_saldo1 = ($deb_saldo1)+$nominal;
             $n_deb_saldo1 = (string)$n_deb_saldo1;    
         } else {
@@ -339,19 +327,6 @@ class projectTransactionController extends Controller
         $cred_saldo2 = Crypt::decryptString($ledger2_before->cred_saldo);
         $cred_saldo2 = (int)$cred_saldo2;
                 
-        // if ($cred_saldo2 != 0) {
-        //     $n_cred_saldo2 = ($cred_saldo2-$nominal_old)+$nominal;
-        //     $n_cred_saldo2 = (string)$n_cred_saldo2;    
-        // } else {
-        //     $n_cred_saldo2 = "0";
-        // }
-        // if ($deb_saldo2 != 0) {
-        //     $n_deb_saldo2 = ($deb_saldo2+$nominal_old)-$nominal;
-        //     $n_deb_saldo2 = (string)$n_deb_saldo2;    
-        // } else {
-        //     $n_deb_saldo2 = "0";
-        // }
-
         if ($cred_saldo2 != 0) {
             $n_cred_saldo2 = ($cred_saldo2)+$nominal;
             $n_cred_saldo2 = (string)$n_cred_saldo2;    
@@ -416,6 +391,8 @@ class projectTransactionController extends Controller
         DB::table('trial_balances')->where('id_ledger','=',$ledger2->id)->update($tbalance_data2);
 
         // $myLog->go('update',$before_value2,\json_encode($tbalance_data2),'trial_balances');    
+
+        //update to acc payable
 
         return redirect()->route('generalLedger.index')->withStatus(__('Project Transaction successfully updated.'));
         // dd([$data], [$ledgers_data_1], [$ledgers_data_2], [$tbalance_data1], [$tbalance_data2]);

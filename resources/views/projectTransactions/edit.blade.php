@@ -34,6 +34,19 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group{{ $errors->has('id_creditor') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-id-creditor">{{ __('Creditor') }}</label>
+                                    <br>
+                                    <label class="form-control-label text-muted" for="input-id-creditor-note">{{ __('pilih kreditur jika melakukan transaksi hutang') }}</label>
+                                    <select class="form-control form-control-alternative{{ $errors->has('id_creditor') ? ' is-invalid' : '' }}" name="id_creditor" id="id_creditor" value="{{ old('id_creditor', $generalLedger->id_creditor) }}" disabled="disabled">
+                                        @foreach ($creditor as $row)
+                                            <option value="{{$row['id']}}">
+                                                {{$row['cred_name']}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div class="form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-date">{{ __('Date') }}</label>
                                     <div class="input-group input-group-alternative">
