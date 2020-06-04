@@ -13,6 +13,7 @@ use App\General_ledger;
 use App\Acc_payable;
 use App\Http\Library\myLog;
 use Auth;
+use DB;
 
 class AccPayableController extends Controller
 {
@@ -31,9 +32,16 @@ class AccPayableController extends Controller
 
 
 
-        $data = Acc_payable::with(['transaction' => function($query){
-            $query->groupBy('id_creditor');
-        }])->get();
+        // $data = Acc_payable::with(['transaction' => function($query){
+        //     $query->groupBy('id_creditor');
+        // }])->get();
+
+        //main query builder sahaja
+        $data = DB::table('acc_payable')
+        ->join('general_ledgers', 'general_ledgers.id', '=', 'acc_payable.id_transaction')
+        ->join('creditors', 'creditors.id', '=', 'general_ledgers.id_creditor')
+        ->groupBy('general_ledgers.id_creditor')
+        ->get();
 
         dd( $data);
 
