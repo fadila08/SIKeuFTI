@@ -35,15 +35,14 @@ class otherTransactionController extends Controller
         // $myLog = new myLog; /*code*/
 
         //insert to jurnal umum
-        // $proof = $request->file('upload_proof')->store('proof_transactions'); /*code*/
+        $proof = $request->file('upload_proof')->store('proof_transactions'); 
 
-        /*code*/
         //di exclude dulu upload proofnya
-        // $data = $request->merge(['nominal' => Crypt::encryptString($request->get('nominal'))])->except('upload_proof');
+        $data = $request->merge(['nominal' => Crypt::encryptString($request->get('nominal'))])->except('upload_proof');
         //ditambah secara manual
-        // $data['upload_proof'] = $proof;
+        $data['upload_proof'] = $proof;
 
-        // $model->create($data); /*code*/
+        $model->create($data); 
 
         /*code*/
         //log jurnal umum
