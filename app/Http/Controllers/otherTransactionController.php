@@ -258,34 +258,43 @@ class otherTransactionController extends Controller
             $last_acc_payable = Acc_payable::with('transaction')->whereHas('transaction', function (Builder $query) {
                 $query->where('id_creditor','=',$this->id_creditor);
             })->latest()->first();
-            dd($cred_coa, $last_acc_payable );
             
-            //jika $transaction->credit_acc = akun akun utang
-            // if ($transaction->id_cred_acc == $cred_coa) {
-            //     $paydate = $transaction->date;
-            //     $debet = $transaction->Crypt::decryptString(nominal);
-            //     $credit = "0";
+            // jika $transaction->credit_acc = akun akun utang
+            foreach ($cred_coa as $value) {           
+                if ($transaction->id_cred_acc == $value->id) {
+                    $nilai = "true";
+                    $paydate = $transaction->date;
+                    $debet = $transaction->nominal;
+                    $debet = Crypt::decryptString($debet);
+                    $credit = "0";
 
-            //     if ($last_acc_payable != NULL) {
-            //         $last_debt = $last_acc_payable->Crypt::decryptString(remaining_debt);
-            //         $rem_debt = $last_debt+$debet;
-            //     } else {
-            //         $rem_debt = $debet;
-            //     }
+                    if ($last_acc_payable != NULL) {
+                        $last_debt = $last_acc_payable->remaining_debt;
+                        // $last_debt = Crypt::decryptString($last_debt);
+                        $rem_debt = $last_debt+$debet;
+                    } else {
+                        $rem_debt = $debet;
+                    }
 
-            // } else {
-            //     $paydate = NULL;
-            //     $debet = "0";
-            //     $credit = $transaction->Crypt::decryptString(nominal);
+                } else {
+                    $nilai = "false";
+                    $paydate = NULL;
+                    $debet = "0";
+                    $credit = $transaction->nominal;
+                    $credit = Crypt::decryptString($credit);
 
-            //     if ($last_acc_payable != NULL) {
-            //         $last_debt = $last_acc_payable->Crypt::decryptString(remaining_debt);
-            //         $rem_debt = $last_debt-$credit;
-            //     } else {
-            //         $rem_debt =-($credit);
-            //     }
+                    if ($last_acc_payable != NULL) {
+                        $last_debt = $last_acc_payable->remaining_debt;
+                        // $last_debt = Crypt::decryptString($last_debt);
+                        $rem_debt = $last_debt-$credit;
+                    } else {
+                        $rem_debt =-($credit);
+                    }
 
-            // }
+                }
+            }
+            dd($nilai);
+            // dd($cred_coa, $last_acc_payable, $paydate, $debet, $credit, $rem_debt );
 
             // $accPayable_data = array('id_transaction' => $transaction->id,
             //                         'pay_date' => $paydate,
