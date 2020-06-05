@@ -36,14 +36,26 @@ class AccPayableController extends Controller
         //     $query->groupBy('id_creditor');
         // }])->get();
 
-        //main query builder sahaja
+        //cari group idcreditor
         $data = DB::table('acc_payable')
         ->join('general_ledgers', 'general_ledgers.id', '=', 'acc_payable.id_transaction')
-        ->join('creditors', 'creditors.id', '=', 'general_ledgers.id_creditor')
         ->groupBy('general_ledgers.id_creditor')
         ->get();
 
-        dd( $data);
+        //ambil data accpayable
+        $data2 = Acc_payable::with('transaction.creditor')->get();
+
+        //seleksi data accpayable ke group idcreditor
+        $accPayable = array();
+        foreach ($data as $key => $value) {
+            foreach ($data2 as $key2 => $item) {
+                if ($value->id_creditor == $item->transaction->id_creditor) {
+                    $accPayable[$value->id_creditor][] = $item;
+                }
+            }
+        }
+
+        dd( $accPayable);
 
         
         // $data = Acc_payable::with('transaction')->get()->groupBy('transaction->id_creditor'); 
