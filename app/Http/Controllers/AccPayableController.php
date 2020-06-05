@@ -24,18 +24,8 @@ class AccPayableController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Acc_payable $data)
+    public function index(Acc_payable $accPayable)
     {
-        // $transaction = General_ledger::get();
-
-        // $this->id_creditor = $transaction->id_creditor;
-
-
-
-        // $data = Acc_payable::with(['transaction' => function($query){
-        //     $query->groupBy('id_creditor');
-        // }])->get();
-
         //cari group idcreditor
         $data = DB::table('acc_payable')
         ->join('general_ledgers', 'general_ledgers.id', '=', 'acc_payable.id_transaction')
@@ -55,15 +45,12 @@ class AccPayableController extends Controller
             }
         }
 
-        dd( $accPayable);
-
-        
-        // $data = Acc_payable::with('transaction')->get()->groupBy('transaction->id_creditor'); 
+        // dd( $accPayable);
        
         $myLog = new myLog;
         $myLog->go('show','','','acc_payable');
 
-        return view('accPayables.index', ['accPayables' => $data]);
+        return view('accPayables.index', ['accPayables' => $accPayable]);
     }
 
     public function edit($id='')

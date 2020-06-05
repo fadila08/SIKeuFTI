@@ -27,16 +27,16 @@ class AccPayableRequest extends FormRequest
     {
         return [
             'id_transaction' => [
-                'required'
+                $this->route('accPayable') ? '' : 'required'
             ],
             'debet' => [
-                'required'
+                $this->route('accPayable') ? '' : 'required'
             ],
             'credit' => [
-                'required'
+                $this->route('accPayable') ? '' : 'required'
             ],
             'remaining_debt' => [
-                'required', 
+                $this->route('accPayable') ? '' : 'required'
             ]
         ];
     }

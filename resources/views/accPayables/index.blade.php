@@ -19,7 +19,7 @@
                     </div>
                     
                     @foreach ($accPayables as $key => $value)
-                        <h5 class="card-title text-muted mb-0 ml-3">{{ __('Nama Kreditur : ') }} {{ $value[0]->transaction->id_creditor->creditor_name }}</h5>
+                        <h5 class="card-title text-muted mb-0 ml-3">{{ __('Nama Kreditur : ') }} {{ $value[0]->transaction->creditor->cred_name }}</h5>
                         
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush">

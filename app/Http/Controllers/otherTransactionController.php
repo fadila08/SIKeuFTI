@@ -294,7 +294,9 @@ class otherTransactionController extends Controller
                                     'due_date' => NULL,
                                     'debet' => Crypt::encryptString($debet),
                                     'credit' => Crypt::encryptString($credit),
-                                    'remaining_debt' => Crypt::encryptString($rem_debt)
+                                    'remaining_debt' => Crypt::encryptString($rem_debt),
+                                    'created_at' => Carbon::now(),
+                                    'updated_at' => Carbon::now()
                                     );
 
             // dd($accPayable_data);

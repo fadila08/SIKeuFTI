@@ -134,33 +134,38 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Kartu Hutang') }}
+                    <a class="nav-link" href="{{ route('accPayable.index') }}">
+                        <i class="ni ni-send text-primary-fti"></i> {{ __('Kartu Hutang') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Kartu Piutang') }}
+                        <i class="ni ni-paper-diploma text-orange"></i> {{ __('Kartu Piutang') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="ni ni-key-25 text-info"></i> {{ __('Kartu Pajak') }}
+                        <i class="ni ni-single-copy-04 text-info"></i> {{ __('Kartu Pajak') }}
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-circle-08 text-pink"></i> {{ __('Kartu Penerimaan & Pengeluaran Proyek') }}
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Pendapatan & Piutang Kontrak') }}
+                        <i class="ni ni-bag-17 text-blue"></i> {{ __('Pendapatan Kontrak') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Pendapatan Proyek') }}
+                        <i class="ni ni-archive-2 text-blue"></i> {{ __('Piutang Kontrak') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="ni ni-money-coins text-orange"></i> {{ __('Pendapatan Proyek') }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -217,7 +222,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples3">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
+                        <i class="ni ni-book-bookmark" style="color: #f4645f;"></i>
                         <span class="nav-link-text" style="color: rgba(0, 0, 0, .5);">{{ __('Laporan Keuangan') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-examples3">
