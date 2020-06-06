@@ -257,16 +257,16 @@
                             </div>
                             <div class="col">
                                 <ul class="nav nav-pills justify-content-end">
-                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#total-revenue" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
-                                        <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
+                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#total-revenue" >
+                                        <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab" onclick="tRevenue('M')">
                                             <span class="d-none d-md-block">Month</span>
                                             <span class="d-md-none">M</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" data-toggle="chart" data-target="#total-revenue" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
-                                        <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                                            <span class="d-none d-md-block">Week</span>
-                                            <span class="d-md-none">W</span>
+                                    <li class="nav-item" data-toggle="chart" data-target="#total-revenue" >
+                                        <a href="#" class="nav-link py-2 px-3" data-toggle="tab" onclick="tRevenue('Y')">
+                                            <span class="d-none d-md-block">Year</span>
+                                            <span class="d-md-none">Y</span>
                                         </a>
                                     </li>
                                 </ul>

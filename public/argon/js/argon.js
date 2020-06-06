@@ -19,6 +19,7 @@
 //
 // Bootstrap Datepicker
 //
+var base_url = window.location.origin+'/';
 
 'use strict';
 
@@ -825,6 +826,7 @@ var Charts = (function() {
 
 	// Update options
 	function updateOptions(elem) {
+
 		var options = elem.data('update');
 		var $target = $(elem.data('target'));
 		var $chart = $target.data('chart');
@@ -855,9 +857,11 @@ var Charts = (function() {
 
 			// Update tooltips
 			$chart.options.tooltips.callbacks.label = function(item, data) {
+
 				var label = data.datasets[item.datasetIndex].label || '';
 				var yLabel = item.yLabel;
 				var content = '';
+
 
 				if (data.datasets.length > 1) {
 					content += '<span class="popover-body-label mr-auto">' + label + '</span>';
@@ -891,6 +895,7 @@ var Charts = (function() {
 			var $this = $(this);
 
 			if ($this.is('[data-update]')) {
+
 				updateOptions($this);
 			}
 		}
@@ -1231,7 +1236,7 @@ var CashFlowChart = (function() {
 						ticks: {
 							callback: function(value) {
 								if (!(value % 10)) {
-									return '$' + value + 'k';
+									return  value ;
 								}
 							}
 						}
@@ -1248,14 +1253,14 @@ var CashFlowChart = (function() {
 								content += '<span class="popover-body-label mr-auto">' + label + '</span>';
 							}
 
-							content += '<span class="popover-body-value">$' + yLabel + 'k</span>';
+							content += '<span class="popover-body-value">' + yLabel + '</span>';
 							return content;
 						}
 					}
 				}
 			},
 			data: {
-				labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				labels: ['Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 				datasets: [{
 					label: 'Performance',
 					data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
@@ -1355,58 +1360,64 @@ var TotalRevenue = (function() {
 
 	var $chart = $('#total-revenue');
 
-
 	// Methods
 
 	function init($chart) {
 
-		var TotalRevenue = new Chart($chart, {
-			type: 'line',
-			options: {
-				scales: {
-					yAxes: [{
-						gridLines: {
-							color: Charts.colors.gray[900],
-							zeroLineColor: Charts.colors.gray[900]
+		$.ajax({
+      type:'GET',
+      url: base_url+'api/totalrevenue',
+      success: function (response) {
+				
+				var TotalRevenue = new Chart($chart, {
+					type: 'line',
+					options: {
+						scales: {
+							yAxes: [{
+								gridLines: {
+									color: Charts.colors.gray[900],
+									zeroLineColor: Charts.colors.gray[900]
+								},
+								ticks: {
+									callback: function(value) {
+											return value;
+										
+									}
+								}
+							}]
 						},
-						ticks: {
-							callback: function(value) {
-								if (!(value % 10)) {
-									return '$' + value + 'k';
+						tooltips: {
+							// enabled: true,
+							callbacks: {
+								label: function(item, data) {
+									var label = data.datasets[item.datasetIndex].label || '';
+									var yLabel = item.yLabel;
+									var content = '';
+		
+									if (data.datasets.length > 1) {
+										content += '<span class="popover-body-label mr-auto">' + label + '</span>';
+									}
+		
+									content += '<span class="popover-body-value">' + yLabel + '</span>';
+									return content;
 								}
 							}
 						}
-					}]
-				},
-				tooltips: {
-					callbacks: {
-						label: function(item, data) {
-							var label = data.datasets[item.datasetIndex].label || '';
-							var yLabel = item.yLabel;
-							var content = '';
-
-							if (data.datasets.length > 1) {
-								content += '<span class="popover-body-label mr-auto">' + label + '</span>';
-							}
-
-							content += '<span class="popover-body-value">$' + yLabel + 'k</span>';
-							return content;
-						}
+					},
+					data: {
+						labels: response.labels,
+						datasets: [{
+							label: 'Performance',
+							data: response.data
+						}]
 					}
-				}
-			},
-			data: {
-				labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-				datasets: [{
-					label: 'Performance',
-					data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
-				}]
-			}
-		});
-
-		// Save to jQuery object
-
-		$chart.data('chart', TotalRevenue);
+				});
+		
+				// Save to jQuery object
+		
+				$chart.data('chart', TotalRevenue);
+      }
+    });
 
 	};
 
@@ -1418,6 +1429,133 @@ var TotalRevenue = (function() {
 	}
 
 })();
+
+function tRevenue(param) {
+	var TotalRevenue = null;
+	TotalRevenue = (function() {
+		// Variables
+	
+		var $chart = null;
+		$chart = $('#total-revenue');
+	
+		// Methods
+	
+		function init($chart) {
+	
+			$.ajax({
+				type:'GET',
+				url: base_url+'api/totalrevenue',
+				success: function (response) {
+
+					if (param == 'M') {
+						var TotalRevenue = new Chart($chart, {
+							type: 'line',
+							options: {
+								scales: {
+									yAxes: [{
+										gridLines: {
+											color: Charts.colors.gray[900],
+											zeroLineColor: Charts.colors.gray[900]
+										},
+										ticks: {
+											callback: function(value) {
+													return value;
+												
+											}
+										}
+									}]
+								},
+								tooltips: {
+									// enabled: true,
+									callbacks: {
+										label: function(item, data) {
+											var label = data.datasets[item.datasetIndex].label || '';
+											var yLabel = item.yLabel;
+											var content = '';
+				
+											if (data.datasets.length > 1) {
+												content += '<span class="popover-body-label mr-auto">' + label + '</span>';
+											}
+				
+											content += '<span class="popover-body-value">' + yLabel + '</span>';
+											return content;
+										}
+									}
+								}
+							},
+							data: {
+								labels: response.labels,
+								datasets: [{
+									label: 'Performance',
+									data: response.data
+								}]
+							}
+						});
+					}else if (param == 'Y') {
+						var TotalRevenue = new Chart($chart, {
+							type: 'line',
+							options: {
+								scales: {
+									yAxes: [{
+										gridLines: {
+											color: Charts.colors.gray[900],
+											zeroLineColor: Charts.colors.gray[900]
+										},
+										ticks: {
+											callback: function(value) {
+													return value;
+												
+											}
+										}
+									}]
+								},
+								tooltips: {
+									// enabled: true,
+									callbacks: {
+										label: function(item, data) {
+											var label = data.datasets[item.datasetIndex].label || '';
+											var yLabel = item.yLabel;
+											var content = '';
+				
+											if (data.datasets.length > 1) {
+												content += '<span class="popover-body-label mr-auto">' + label + '</span>';
+											}
+				
+											content += '<span class="popover-body-value">' + yLabel + '</span>';
+											return content;
+										}
+									}
+								}
+							},
+							data: {
+								labels: response.labels_year,
+								datasets: [{
+									label: 'Performance',
+									data: response.data_year
+								}]
+							}
+						});
+					}
+					
+					
+			
+					// Save to jQuery object
+			
+					$chart.data('chart', TotalRevenue);
+				}
+			});
+	
+		};
+	
+	
+		// Events
+	
+		if ($chart.length) {
+			init($chart);
+		}
+	
+	})();
+}
 
 var ChangesInEquity = (function() {
 
