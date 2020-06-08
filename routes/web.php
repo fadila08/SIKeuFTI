@@ -52,8 +52,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('Ledger', 'LedgerController', ['except' => ['show']]);
 	//neraca saldo
 	Route::resource('trialBalance', 'trialBalanceController', ['except' => ['show']]);
-	//acc payable
+	//utang
 	Route::resource('accPayable', 'AccPayableController', ['except' => ['show']]);
+	//piutang
+	Route::resource('accReceivable', 'AccReceivableController', ['except' => ['show']]);
 
 
 
