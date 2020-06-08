@@ -235,6 +235,79 @@ class projectTransactionController extends Controller
             $myLog->go('store','',\json_encode($tbalance_data2),'trial_balances');
         }
 
+        //insert to acc receivable (piutang)
+        $transaction = General_ledger::with('project')->latest()->first();
+        $coa_AR = Coa::where('acc_name', 'like',   'piutang%')->get();
+        
+        foreach ($coa_AR as $value) {
+            if ($transaction->id_debet_acc == $value->id || $transaction->id_cred_acc == $value->id) {
+                
+                $id_coa = $value->id;
+
+                $AR = DB::table('acc_receivable')
+                ->join('general_ledgers', 'general_ledgers.id', '=', 'acc_receivable.id_transaction')
+                ->join('projects', 'projects.id', '=', 'general_ledgers.id_project')
+                ->join('customers', 'customers.id', '=', 'projects.id_cust')
+                ->orderby('acc_receivable.id','DESC')
+                ->first();
+
+                if($transaction->id_debet_acc == $id_coa) {
+                    $paydate = NULL;
+                    $debet = $transaction->nominal;
+                    $debet = Crypt::decryptString($debet);
+                    $credit = "0";
+
+                    if($AR != NULL) {
+                        if ($AR->id_cust == $transaction->project->id_cust) {
+                            $last_debt = $AR->remaining_debt;
+                            $last_debt = Crypt::decryptString($last_debt);
+                            $rem_debt = $last_debt+$debet;
+                        } else {
+                            $rem_debt = $debet;
+                        }    
+                    } else {
+                        $rem_debt = $debet;
+                    }
+
+                } else {
+                    $paydate = $transaction->date;
+                    $debet = "0";
+                    $credit = $transaction->nominal;
+                    $credit = Crypt::decryptString($credit);
+
+                    if($AR != NULL) {
+                        if ($AR->id_cust == $transaction->project->id_cust) {
+                            $last_debt = $AR->remaining_debt;
+                            $last_debt = Crypt::decryptString($last_debt);
+                            $rem_debt = $last_debt-$credit;
+                        } else {
+                            $rem_debt = -($credit);
+                        }
+                    } else {
+                        $rem_debt = -($credit);
+                    }
+                }
+
+                $accReceivable_data = array('id_transaction' => $transaction->id,
+                                            'pay_date' => $paydate,
+                                            'due_date' => NULL,
+                                            'debet' => Crypt::encryptString($debet),
+                                            'credit' => Crypt::encryptString($credit),
+                                            'remaining_debt' => Crypt::encryptString($rem_debt),
+                                            'created_at' => Carbon::now(),
+                                            'updated_at' => Carbon::now()
+                                            );
+                
+                // dd($accReceivable_data);
+                DB::table('acc_receivable')->insert($accReceivable_data);
+
+                //log acc receivable
+                $myLog->go('store','',\json_encode($accReceivable_data),'acc_receivable');
+
+            break;
+            }           
+        }
+
         return redirect()->route('projectTransaction.create')->withStatus(__('Project Transaction successfully added.'));
     }
 
