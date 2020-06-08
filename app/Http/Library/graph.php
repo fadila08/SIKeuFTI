@@ -45,7 +45,7 @@ class graph{
           array_push($month['labels'],date("M", strtotime($key)));
           foreach ($data as $key2 => $item) {
               if ($key == date("Y-m", strtotime($item->ledger->desc->date))) {
-                  $total += \Crypt::decryptString($item->ledger->debet_saldo);
+                  $total += \Crypt::decryptString($item->ledger->cred_saldo);
               }
           }
           array_push($month['data'],$total);
@@ -72,7 +72,7 @@ class graph{
           array_push($month['labels_year'],date("Y", strtotime($key)));
           foreach ($data as $key2 => $item) {
               if ($key == date("Y", strtotime($item->ledger->desc->date))) {
-                  $total += \Crypt::decryptString($item->ledger->debet_saldo);
+                  $total += \Crypt::decryptString($item->ledger->cred_saldo);
               }
           }
           array_push($month['data_year'],$total);
