@@ -17,4 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/totalrevenue','Api\trialBalanceController@getTotalRevenue');
+Route::get('/totalrevenue','Api\GraphController@getTotalRevenue');
+Route::get('/totalproject','Api\GraphController@getTotalProject');

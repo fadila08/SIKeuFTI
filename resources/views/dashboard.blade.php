@@ -289,8 +289,24 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h6 class="text-uppercase text-muted ls-1 mb-1">2020 Performance</h6>
+                                <h6 class="text-uppercase text-muted ls-1 mb-1" id="title-project">{{date('F')}} Performance</h6>
                                 <h2 class="mb-0">Projects</h2>
+                            </div>
+                            <div class="col">
+                                <ul class="nav nav-pills justify-content-end">
+                                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-projects" >
+                                        <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab" onclick="tcProject('M')">
+                                            <span class="d-none d-md-block">Month</span>
+                                            <span class="d-md-none">M</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" data-toggle="chart" data-target="#chart-projects" >
+                                        <a href="#" class="nav-link py-2 px-3" data-toggle="tab" onclick="tcProject('Y')">
+                                            <span class="d-none d-md-block">Year</span>
+                                            <span class="d-md-none">Y</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

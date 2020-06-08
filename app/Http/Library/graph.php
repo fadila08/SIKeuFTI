@@ -78,4 +78,70 @@ class graph{
       // return \json_encode($month);
       return $month;
     }
+
+    public function showTotalProject(){
+        /* month */
+        $group = DB::table('projects')
+                ->whereMonth('project_started',date('m'))
+                ->select('id_service', DB::raw('count(*) as total'))
+                 ->groupBy('id_service')
+                 ->get();
+  
+        $data = DB::table('services')
+                 ->get();
+        
+
+        $month = array();
+        $month['labels'] = array();
+        $month['data'] = array();
+        foreach ($data as $key => $value) {
+            $flag = true;
+            array_push($month['labels'],$value->service_name);
+            foreach ($group as $key2 => $item) {
+                if ($value->id == $item->id_service) {
+                    array_push($month['data'],$item->total);
+                    $flag = true;
+                break;
+                }else{
+                    $flag = false;
+                }
+            }
+            if (!$flag) {
+                array_push($month['data'],0);
+            }
+        }
+  
+        /* year */
+  
+        $group = DB::table('projects')
+                ->whereYear('project_started',date('Y'))
+                ->select('id_service', DB::raw('count(*) as total'))
+                 ->groupBy('id_service')
+                 ->get();
+  
+        $month['labels_year'] = array();
+        $month['data_year'] = array();
+        foreach ($data as $key => $value) {
+            $flag = true;
+            array_push($month['labels_year'],$value->service_name);
+            foreach ($group as $key2 => $item) {
+                if ($value->id == $item->id_service) {
+                    array_push($month['data_year'],$item->total);
+                    $flag = true;
+                break;
+                }else{
+                    $flag = false;
+                }
+                
+            }
+            if (!$flag) {
+                array_push($month['data_year'],0);
+            }
+        }
+
+        $month['time'] = array(date('F'),date('Y'));
+  
+        // return \json_encode($month);
+        return $month;
+      }
 }
