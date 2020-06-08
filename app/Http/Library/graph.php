@@ -21,11 +21,9 @@ class graph{
 
     public function showTotalRevenue(){
       /* month */
-      $group = DB::table('trial_balances')
-      ->join('coas','coas.id','=','trial_balances.id_coa')
+      $group = DB::table('general_ledgers')
+      ->join('coas','coas.id','=','general_ledgers.id_cred_acc')
       ->where('coas.acc_name', 'like',   'pendapatan%')
-      ->join('ledgers','ledgers.id','=','trial_balances.id_ledger')
-      ->join('general_ledgers','general_ledgers.id','=','ledgers.id_desc')
       ->orderBy('date', 'ASC')
       ->get()
       ->groupBy(function($d) {
@@ -33,9 +31,10 @@ class graph{
       })
       ;
 
-      $data = Trial_balance::with(['ledger.desc','coa'])->whereHas('coa', function (Builder $query) {
+
+      $data = General_ledger::with(['credAcc'])->whereHas('credAcc', function (Builder $query) {
         $query->where('acc_name', 'like',   'pendapatan%');
-        })->orderBy('id_coa', 'ASC')->get();
+        })->orderBy('id', 'ASC')->get();
       
       $month = array();
       $month['labels'] = array();
@@ -44,8 +43,8 @@ class graph{
           $total = 0;
           array_push($month['labels'],date("M", strtotime($key)));
           foreach ($data as $key2 => $item) {
-              if ($key == date("Y-m", strtotime($item->ledger->desc->date))) {
-                  $total += \Crypt::decryptString($item->ledger->cred_saldo);
+              if ($key == date("Y-m", strtotime($item->date))) {
+                  $total += \Crypt::decryptString($item->nominal);
               }
           }
           array_push($month['data'],$total);
@@ -53,11 +52,9 @@ class graph{
 
       /* year */
 
-      $group = DB::table('trial_balances')
-      ->join('coas','coas.id','=','trial_balances.id_coa')
+      $group =  DB::table('general_ledgers')
+      ->join('coas','coas.id','=','general_ledgers.id_cred_acc')
       ->where('coas.acc_name', 'like',   'pendapatan%')
-      ->join('ledgers','ledgers.id','=','trial_balances.id_ledger')
-      ->join('general_ledgers','general_ledgers.id','=','ledgers.id_desc')
       ->orderBy('date', 'ASC')
       ->get()
       ->groupBy(function($d) {
@@ -71,10 +68,10 @@ class graph{
           $total = 0;
           array_push($month['labels_year'],date("Y", strtotime($key)));
           foreach ($data as $key2 => $item) {
-              if ($key == date("Y", strtotime($item->ledger->desc->date))) {
-                  $total += \Crypt::decryptString($item->ledger->cred_saldo);
-              }
-          }
+            if ($key == date("Y-m", strtotime($item->date))) {
+                $total += \Crypt::decryptString($item->nominal);
+            }
+        }
           array_push($month['data_year'],$total);
       }
 
