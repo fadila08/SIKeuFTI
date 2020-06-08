@@ -4,6 +4,8 @@ namespace App\Http\Library;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Builder;
+
 use Illuminate\Support\Str;
 use App\Trial_balance;
 use App\Ledger;
@@ -20,6 +22,8 @@ class graph{
     public function showTotalRevenue(){
       /* month */
       $group = DB::table('trial_balances')
+      ->join('coas','coas.id','=','trial_balances.id_coa')
+      ->where('coas.acc_name', 'like',   'pendapatan%')
       ->join('ledgers','ledgers.id','=','trial_balances.id_ledger')
       ->join('general_ledgers','general_ledgers.id','=','ledgers.id_desc')
       ->orderBy('date', 'ASC')
@@ -29,8 +33,9 @@ class graph{
       })
       ;
 
-      // dd($group);
-      $data = Trial_balance::with(['ledger.desc','coa'])->orderBy('id_coa', 'ASC')->get();
+      $data = Trial_balance::with(['ledger.desc','coa'])->whereHas('coa', function (Builder $query) {
+        $query->where('acc_name', 'like',   'pendapatan%');
+        })->orderBy('id_coa', 'ASC')->get();
       
       $month = array();
       $month['labels'] = array();
@@ -49,6 +54,8 @@ class graph{
       /* year */
 
       $group = DB::table('trial_balances')
+      ->join('coas','coas.id','=','trial_balances.id_coa')
+      ->where('coas.acc_name', 'like',   'pendapatan%')
       ->join('ledgers','ledgers.id','=','trial_balances.id_ledger')
       ->join('general_ledgers','general_ledgers.id','=','ledgers.id_desc')
       ->orderBy('date', 'ASC')
