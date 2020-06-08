@@ -987,51 +987,59 @@ var ProjectsChart = (function() {
 	// Init chart
 	function initChart($chart) {
 
-		// Create chart
-		var ProjectsChart = new Chart($chart, {
-			type: 'bar',
-			options: {
-				scales: {
-					yAxes: [{
-						ticks: {
-							callback: function(value) {
-								if (!(value % 10)) {
-									//return '$' + value + 'k'
-									return value
+		$.ajax({
+      type:'GET',
+      url: base_url+'api/totalproject',
+      success: function (response) {
+				document.getElementById("title-project").innerHTML = response.time[0] + " Performance"
+
+				// Create chart
+				var ProjectsChart = new Chart($chart, {
+					type: 'bar',
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									callback: function(value) {
+										if (!(value % 10)) {
+											//return '$' + value + 'k'
+											return value
+										}
+									}
+								}
+							}]
+						},
+						tooltips: {
+							callbacks: {
+								label: function(item, data) {
+									var label = data.datasets[item.datasetIndex].label || '';
+									var yLabel = item.yLabel;
+									var content = '';
+
+									if (data.datasets.length > 1) {
+										content += '<span class="popover-body-label mr-auto">' + label + '</span>';
+									}
+
+									content += '<span class="popover-body-value">' + yLabel + '</span>';
+									
+									return content;
 								}
 							}
 						}
-					}]
-				},
-				tooltips: {
-					callbacks: {
-						label: function(item, data) {
-							var label = data.datasets[item.datasetIndex].label || '';
-							var yLabel = item.yLabel;
-							var content = '';
-
-							if (data.datasets.length > 1) {
-								content += '<span class="popover-body-label mr-auto">' + label + '</span>';
-							}
-
-							content += '<span class="popover-body-value">' + yLabel + '</span>';
-							
-							return content;
-						}
+					},
+					data: {
+						labels: response.labels,
+						datasets: [{
+							label: 'Project',
+							data: response.data
+						}]
 					}
-				}
-			},
-			data: {
-				labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-				datasets: [{
-					label: 'Sales',
-					data: [25, 20, 30, 22, 17, 29]
-				}]
-			}
-		});
+				});
 
-		// Save to jQuery object
-		$chart.data('chart', ProjectsChart);
+				// Save to jQuery object
+				$chart.data('chart', ProjectsChart);
+			}
+    });
 	}
 
 
@@ -1042,6 +1050,138 @@ var ProjectsChart = (function() {
 
 })();
 
+function tcProject(param) {
+	var ProjectsChart = null;
+
+	var ProjectsChart = (function() {
+
+		//
+		// Variables
+		//
+	
+		var $chart = $('#chart-projects');
+		var $ordersSelect = $('[name="ordersSelect"]');
+	
+	
+		//
+		// Methods
+		//
+	
+		// Init chart
+		function initChart($chart) {
+	
+			$.ajax({
+				type:'GET',
+				url: base_url+'api/totalproject',
+				success: function (response) {
+
+					if (param == 'M') {
+						document.getElementById("title-project").innerHTML = response.time[0] + " Performance"
+
+						// Create chart
+						var ProjectsChart = new Chart($chart, {
+							type: 'bar',
+							options: {
+								scales: {
+									yAxes: [{
+										ticks: {
+											callback: function(value) {
+												if (!(value % 10)) {
+													//return '$' + value + 'k'
+													return value
+												}
+											}
+										}
+									}]
+								},
+								tooltips: {
+									callbacks: {
+										label: function(item, data) {
+											var label = data.datasets[item.datasetIndex].label || '';
+											var yLabel = item.yLabel;
+											var content = '';
+		
+											if (data.datasets.length > 1) {
+												content += '<span class="popover-body-label mr-auto">' + label + '</span>';
+											}
+		
+											content += '<span class="popover-body-value">' + yLabel + '</span>';
+											
+											return content;
+										}
+									}
+								}
+							},
+							data: {
+								labels: response.labels,
+								datasets: [{
+									label: 'Project',
+									data: response.data
+								}]
+							}
+						});
+					}else{
+						// Create chart
+						document.getElementById("title-project").innerHTML = response.time[1] + " Performance"
+
+						var ProjectsChart = new Chart($chart, {
+							type: 'bar',
+							options: {
+								scales: {
+									yAxes: [{
+										ticks: {
+											callback: function(value) {
+												if (!(value % 10)) {
+													//return '$' + value + 'k'
+													return value
+												}
+											}
+										}
+									}]
+								},
+								tooltips: {
+									callbacks: {
+										label: function(item, data) {
+											var label = data.datasets[item.datasetIndex].label || '';
+											var yLabel = item.yLabel;
+											var content = '';
+		
+											if (data.datasets.length > 1) {
+												content += '<span class="popover-body-label mr-auto">' + label + '</span>';
+											}
+		
+											content += '<span class="popover-body-value">' + yLabel + '</span>';
+											
+											return content;
+										}
+									}
+								}
+							},
+							data: {
+								labels: response.labels_year,
+								datasets: [{
+									label: 'Project',
+									data: response.data_year
+								}]
+							}
+					});
+					}
+					
+	
+					// Save to jQuery object
+					$chart.data('chart', ProjectsChart);
+				}
+			});
+		}
+	
+	
+		// Init chart
+		if ($chart.length) {
+			initChart($chart);
+		}
+	
+	})();
+}
 
 var ProfitLost = (function() {
 
