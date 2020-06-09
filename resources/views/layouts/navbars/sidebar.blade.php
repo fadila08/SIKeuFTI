@@ -140,7 +140,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('accReceivable.index') }}">
-                        <i class="ni ni-paper-diploma text-orange"></i> {{ __('Kartu Piutang') }}
+                        <i class="ni ni-paper-diploma text-primary-fti"></i> {{ __('Kartu Piutang') }}
                     </a>
                 </li>
                 <li class="nav-item">

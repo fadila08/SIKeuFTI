@@ -15,14 +15,18 @@ use App\Coa;
 use App\Project;
 use App\Creditor;
 use App\Acc_payable;
+use App\Acc_receivable;
 use App\Http\Library\myLog;
 use Auth;
 use DB;
 use Carbon\Carbon;
 use Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 class projectTransactionController extends Controller
 {
+    private $id_debitor = "";
+
     public function create()
     {
         $project = Project::get();
@@ -244,12 +248,13 @@ class projectTransactionController extends Controller
                 
                 $id_coa = $value->id;
 
-                $AR = DB::table('acc_receivable')
-                ->join('general_ledgers', 'general_ledgers.id', '=', 'acc_receivable.id_transaction')
-                ->join('projects', 'projects.id', '=', 'general_ledgers.id_project')
-                ->join('customers', 'customers.id', '=', 'projects.id_cust')
-                ->orderby('acc_receivable.id','DESC')
-                ->first();
+                //get data acc receivable terakhir yang id customernya sama dgn id customer inputan
+                $this->id_debitor = $transaction->project->id_cust;
+
+                //variabel $this->id_debitor harus diinisialisasi di variabel global, kalau tidak dia tidak terdeteksi di fungsi builder dibawah ini
+                $last_acc_receivable = Acc_receivable::with('transaction.project')->whereHas('transaction.project', function (Builder $query) {
+                                                    $query->where('id_cust','=',$this->id_debitor);
+                                                    })->latest()->first();
 
                 if($transaction->id_debet_acc == $id_coa) {
                     $paydate = NULL;
@@ -257,17 +262,13 @@ class projectTransactionController extends Controller
                     $debet = Crypt::decryptString($debet);
                     $credit = "0";
 
-                    if($AR != NULL) {
-                        if ($AR->id_cust == $transaction->project->id_cust) {
-                            $last_debt = $AR->remaining_debt;
-                            $last_debt = Crypt::decryptString($last_debt);
-                            $rem_debt = $last_debt+$debet;
-                        } else {
-                            $rem_debt = $debet;
-                        }    
+                    if ($last_acc_receivable != NULL) {
+                        $last_debt = $last_acc_receivable->remaining_debt;
+                        $last_debt = Crypt::decryptString($last_debt);
+                        $rem_debt = $last_debt+$debet;
                     } else {
                         $rem_debt = $debet;
-                    }
+                    }    
 
                 } else {
                     $paydate = $transaction->date;
@@ -275,14 +276,10 @@ class projectTransactionController extends Controller
                     $credit = $transaction->nominal;
                     $credit = Crypt::decryptString($credit);
 
-                    if($AR != NULL) {
-                        if ($AR->id_cust == $transaction->project->id_cust) {
-                            $last_debt = $AR->remaining_debt;
-                            $last_debt = Crypt::decryptString($last_debt);
-                            $rem_debt = $last_debt-$credit;
-                        } else {
-                            $rem_debt = -($credit);
-                        }
+                    if ($last_acc_receivable != NULL) {
+                        $last_debt = $last_acc_receivable->remaining_debt;
+                        $last_debt = Crypt::decryptString($last_debt);
+                        $rem_debt = $last_debt-$credit;
                     } else {
                         $rem_debt = -($credit);
                     }
