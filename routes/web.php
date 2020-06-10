@@ -58,6 +58,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('accReceivable', 'AccReceivableController', ['except' => ['show']]);
 	//pajak
 	Route::resource('tax', 'TaxController', ['except' => ['show']]);
+	//pendapatan kontrak
+	Route::resource('contractRevenue', 'ContractRevenueController', ['except' => ['show']]);
+	//piutang kontrak
+	// Route::resource('contractAR', 'ContractARController', ['except' => ['show']]);
+	//Pendapatan proyek
+	// Route::resource('projectRevenue', 'ProjectRevenueController', ['except' => ['show']]);
 
 
 
