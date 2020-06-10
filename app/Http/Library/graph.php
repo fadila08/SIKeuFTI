@@ -15,8 +15,6 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
-//made by Aditya Nanda Keren :D
-
 class graph{
 
     public function showTotalRevenue(){
