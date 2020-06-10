@@ -145,7 +145,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('tax.index') }}">
-                        <i class="ni ni-single-copy-04 text-info"></i> {{ __('Kartu Pajak') }}
+                        <i class="ni ni-single-copy-04 text-primary-fti"></i> {{ __('Kartu Pajak') }}
                     </a>
                 </li>
                 <!-- <li class="nav-item">
@@ -165,7 +165,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('projectRevenue.index') }}">
-                        <i class="ni ni-money-coins text-orange"></i> {{ __('Pendapatan Proyek') }}
+                        <i class="ni ni-money-coins text-primary-fti"></i> {{ __('Pendapatan Proyek') }}
                     </a>
                 </li>
                 <li class="nav-item">
