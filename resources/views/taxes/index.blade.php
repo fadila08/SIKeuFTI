@@ -49,14 +49,14 @@
                                         <td>
                                             @if (strpos($value->transaction->debetAcc->acc_name, "PPh"))
                                                 {{ $value->transaction->debetAcc->acc_name }}
-                                            @elseif (strpos($value->transaction->creditAcc->acc_name, "PPh"))
+                                            @elseif (strpos($value->transaction->credAcc->acc_name, "PPh"))
                                                 {{ $value->transaction->credAcc->acc_name }}
                                             @endif
                                         </td>
                                         <td>
                                             @if (strpos($value->transaction->debetAcc->acc_name, "PPh"))
                                                 {{ $value->transaction->debetAcc->acc_code }}
-                                            @elseif (strpos($value->transaction->creditAcc->acc_name, "PPh"))
+                                            @elseif (strpos($value->transaction->credAcc->acc_name, "PPh"))
                                                 {{ $value->transaction->credAcc->acc_code }}
                                             @endif
                                         </td>

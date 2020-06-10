@@ -12,6 +12,7 @@ use App\General_ledger;
 use App\Ledger;
 use App\Trial_balance;
 use App\Coa;
+use App\Tax;
 use App\Project;
 use App\Creditor;
 use App\Acc_payable;
@@ -26,6 +27,8 @@ use Illuminate\Database\Eloquent\Builder;
 class projectTransactionController extends Controller
 {
     private $id_debitor = "";
+    private $id_project_tax = "";
+    private $id_coa_tax = "";
 
     public function create()
     {
@@ -305,6 +308,46 @@ class projectTransactionController extends Controller
             }           
         }
 
+        //insert into pajak
+        $coa_tax = Coa::where('acc_name', 'like',   'PPh%')->get();
+
+        foreach ($coa_tax as $value) {
+            //insert
+            if ($transaction->id_cred_acc == $value->id) {
+
+                $tax_data = array('id_transaction' => $transaction->id,
+                                    'due_date' => NULL,
+                                    'pay_status' => "0"
+                                );
+                                
+                // dd($tax_data);
+                DB::table('taxes')->insert($tax_data);                
+
+            break;
+            } 
+            //update
+            elseif ($transaction->id_debet_acc == $value->id) {
+                //get data tax terakhir yang id project & id coa sama dgn id customer inputan
+                $this->id_project_tax = $transaction->id_project;
+                $this->id_coa_tax = $transaction->id_debet_acc;
+
+                //variabel $this->id_debitor harus diinisialisasi di variabel global, kalau tidak dia tidak terdeteksi di fungsi builder dibawah ini
+                $last_tax = Tax::with('transaction')->whereHas('transaction', function (Builder $query) {
+                                                        $query->where('id_project','=',$this->id_project_tax);
+                                                        $query->where('id_cred_acc','=',$this->id_coa_tax);
+                                                    })->latest()->first();
+                
+                $tax_data = array('id_transaction' => $transaction->id,
+                                    'pay_status' => "1"
+                                );
+
+                // dd($tax_data);                
+                $last_tax->update($tax_data);
+                
+            break;
+            }
+        }
+        
         return redirect()->route('projectTransaction.create')->withStatus(__('Project Transaction successfully added.'));
     }
 
