@@ -63,7 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//piutang kontrak
 	// Route::resource('contractAR', 'ContractARController', ['except' => ['show']]);
 	//Pendapatan proyek
-	// Route::resource('projectRevenue', 'ProjectRevenueController', ['except' => ['show']]);
+	Route::resource('projectRevenue', 'ProjectRevenueController', ['except' => ['show']]);
 
 
 

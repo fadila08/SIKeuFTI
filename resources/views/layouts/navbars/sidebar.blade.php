@@ -164,7 +164,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('projectRevenue.index') }}">
                         <i class="ni ni-money-coins text-orange"></i> {{ __('Pendapatan Proyek') }}
                     </a>
                 </li>
