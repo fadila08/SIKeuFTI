@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Library\MyBackup\Backup_Database;
+use GuzzleHttp\Client;
 
 class DatabaseController extends Controller
 {
@@ -40,7 +41,21 @@ class DatabaseController extends Controller
      
 
         if ($result == "OK") {
-            echo 'Proses kirim data, mohon ditunggu..';
+            $backupDatabase->obfPrint('Proses kirim data, mohon ditunggu..',1);
+
+            //ganti url dengan web kedua
+            $client = new Client();
+
+            $result = $client->request('POST', 'http://localhost:8081/api/data/import', [
+                'multipart' => [
+                    [
+                        'name'     => 'file',
+                        'contents' => fopen('myphp-backup.sql', 'r'),
+                    ],
+                ],
+            ]);
+
+            echo $result->getBody();
         }
     }
 }

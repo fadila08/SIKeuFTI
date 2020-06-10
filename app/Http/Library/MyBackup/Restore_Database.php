@@ -1,4 +1,6 @@
 <?php 
+namespace App\Http\Library\MyBackup;
+
 /**
  * This file contains the Restore_Database class wich performs
  * a partial or complete restoration of any given MySQL database
@@ -68,8 +70,8 @@ class Restore_Database {
         $this->charset                 = $charset;
         $this->disableForeignKeyChecks = defined('DISABLE_FOREIGN_KEY_CHECKS') ? DISABLE_FOREIGN_KEY_CHECKS : true;
         $this->conn                    = $this->initializeDatabase();
-        $this->backupDir               = defined('BACKUP_DIR') ? BACKUP_DIR : '.';
-        $this->backupFile              = defined('BACKUP_FILE') ? BACKUP_FILE : null;
+        $this->backupDir               = '';
+        $this->backupFile              = '';
     }
 
     /**
@@ -120,8 +122,10 @@ class Restore_Database {
             $sql = '';
             $multiLineComment = false;
 
-            $backupDir = $this->backupDir;
-            $backupFile = $this->backupFile;
+            $backupDir = 'sql';
+            $backupFile = 'myphp-backup.sql';
+
+            // dd($backupDir,$backupFile);
 
             /**
              * Gunzip file if gzipped
@@ -274,22 +278,3 @@ class Restore_Database {
     }
 }
 
-/**
- * Instantiate Restore_Database and perform backup
- */
-// Report all errors
-error_reporting(E_ALL);
-// Set script max execution time
-set_time_limit(900); // 15 minutes
-
-if (php_sapi_name() != "cli") {
-    echo '<div style="font-family: monospace;">';
-}
-
-$restoreDatabase = new Restore_Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-$result = $restoreDatabase->restoreDb(BACKUP_DIR, BACKUP_FILE) ? 'OK' : 'KO';
-$restoreDatabase->obfPrint("Restoration result: ".$result, 1);
-
-if (php_sapi_name() != "cli") {
-    echo '</div>';
-}
