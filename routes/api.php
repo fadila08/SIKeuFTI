@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/totalrevenue','Api\GraphController@getTotalRevenue');
 Route::get('/totalproject','Api\GraphController@getTotalProject');
+Route::get('/totalprojectrevenue','Api\GraphController@getTotalProjectRevenue');

@@ -144,4 +144,79 @@ class graph{
         // return \json_encode($month);
         return $month;
       }
+
+      public function showTotalProjectRevenue(){
+        /* month */
+        // $group = General_ledger::with(['project' => function($q){
+        //     $q->groupBy('id_service');
+        // }])
+        // // ->whereMonth('date',date('m'))
+        //     // ->get()
+        //     ;
+
+        $group = DB::table('general_ledgers')
+                ->whereMonth('date',date('m'))
+                ->join('projects','projects.id','=','general_ledgers.id_project')
+                ->select('general_ledgers.*','projects.*')
+                // ->select('id_service', DB::raw('count(*) as total'))
+                //  ->groupBy('id_service')
+                 ->get();
+  
+        $data = DB::table('services')
+                 ->get();
+        
+
+        $month = array();
+        $month['labels'] = array();
+        $month['data'] = array();
+        foreach ($data as $key => $value) {
+            // $flag = true;
+            $total = 0;
+            array_push($month['labels'],$value->service_name);
+            foreach ($group as $key2 => $item) {
+                if ($value->id == $item->id_service) {
+                    $total += \Crypt::decryptString($item->nominal);
+                }else{
+
+                }
+            }
+            if (!$flag) {
+                array_push($month['data'],0);
+            }
+        }
+  
+        /* year */
+  
+        $group = DB::table('general_ledgers')
+                ->whereYear('project_started',date('Y'))
+                ->join('projects','projects.id','=','general_ledgers.id_project')
+                ->select('id_service', DB::raw('count(*) as total'))
+                 ->groupBy('id_service')
+                 ->get();
+  
+        $month['labels_year'] = array();
+        $month['data_year'] = array();
+        foreach ($data as $key => $value) {
+            $flag = true;
+            array_push($month['labels_year'],$value->service_name);
+            foreach ($group as $key2 => $item) {
+                if ($value->id == $item->id_service) {
+                    array_push($month['data_year'],$item->total);
+                    $flag = true;
+                break;
+                }else{
+                    $flag = false;
+                }
+                
+            }
+            if (!$flag) {
+                array_push($month['data_year'],0);
+            }
+        }
+
+        $month['time'] = array(date('F'),date('Y'));
+  
+        // return \json_encode($month);
+        return $month;
+      }
 }
