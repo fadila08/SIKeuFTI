@@ -159,8 +159,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-archive-2 text-blue"></i> {{ __('Piutang Kontrak') }}
+                    <a class="nav-link" href="{{ route('contractAR.index') }}">
+                        <i class="ni ni-archive-2 text-primary-fti"></i> {{ __('Piutang Kontrak') }}
                     </a>
                 </li>
                 <li class="nav-item">
