@@ -23,15 +23,9 @@ class ContractRevenueController extends Controller
 
     public function index(Ledger $data)
     {
-        //ambil data ledger yang akun pendapatan kontrak sajaaw
-        $data = DB::table('ledgers')
-        ->join('general_ledgers','general_ledgers.id','=','ledgers.id_desc')
-        ->join('projects','projects.id','=','general_ledgers.id_project')
-        ->join('customers','customers.id','=','projects.id_cust')
-        ->join('coas','coas.id','=','ledgers.id_coa')
-        ->where('coas.acc_name', 'like', 'pendapatan kontrak%')
-        ->groupBy('id_project')
-        ->get();
+        $data = Ledger::with(['coa'])->whereHas('coa', function (Builder $query) {
+            $query->where('acc_name', 'like', 'pendapatan kontrak%');
+            })->get()->groupBy('id_coa'); 
          
         $myLog = new myLog;
         $myLog->go('show','','','ledgers');

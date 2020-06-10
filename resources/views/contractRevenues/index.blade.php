@@ -19,8 +19,8 @@
                     </div>
                     
                     @foreach ($contractRevenues as $key => $value)
-                        <h5 class="card-title text-muted mb-0 ml-3">{{ __('Nama Proyek : ') }} {{ $value[0]->project_name }}</h5>
-                        <h5 class="card-title text-muted mb-1 ml-3">{{ __('Nama Customer : ') }} {{ $value[0]->cust_name }}</h5>
+                        <h5 class="card-title text-muted mb-0 ml-3">{{ __('No. Akun : ') }} {{ $value[0]->coa->acc_code }}</h5>
+                        <h5 class="card-title text-muted mb-1 ml-3">{{ __('Nama Akun : ') }} {{ $value[0]->coa->acc_name }}</h5>
                        
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush">
@@ -35,22 +35,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($value as $item)
+                                @foreach ($value as $item)
                                         <tr>
-                                            <td>{{ $item->date }}</td>
-                                            <td>{{ $item->description }}</td>
+                                            <td>{{ $item->desc->date }}</td>
+                                            <td>{{ $item->desc->description }}</td>
                                             <td>
-                                                @if ($item->id_coa != $item->id_debet_acc)
+                                                @if ($item->id_coa != $item->desc->id_debet_acc)
                                                     {{ ('0') }}
                                                 @else
-                                                    {{ Crypt::decryptString($item->nominal) }}
+                                                    {{ Crypt::decryptString($item->desc->nominal) }}
                                                 @endif
                                             </td>
                                             <td>
-                                                @if ($item->id_coa != $item->id_cred_acc)
+                                                @if ($item->id_coa != $item->desc->id_cred_acc)
                                                     {{ ('0') }}
                                                 @else
-                                                    {{ Crypt::decryptString($item->nominal) }}
+                                                    {{ Crypt::decryptString($item->desc->nominal) }}
                                                 @endif
                                             </td>
                                             <td>{{ Crypt::decryptString($item->debet_saldo) }}</td>

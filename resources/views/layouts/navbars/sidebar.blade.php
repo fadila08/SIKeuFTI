@@ -155,7 +155,7 @@
                 </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('contractRevenue.index') }}">
-                        <i class="ni ni-bag-17 text-blue"></i> {{ __('Pendapatan Kontrak') }}
+                        <i class="ni ni-bag-17 text-primary-fti"></i> {{ __('Pendapatan Kontrak') }}
                     </a>
                 </li>
                 <li class="nav-item">
