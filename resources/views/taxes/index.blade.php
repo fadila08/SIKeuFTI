@@ -44,19 +44,21 @@
                             </thead>
                             <tbody>
                                 @foreach ($taxes as $value)
+                                     @if (strpos($value->transaction->debetAcc->acc_name, "PPh") !== false ||  strpos($value->transaction->credAcc->acc_name, "PPh") !== false)
                                     <tr>
                                         <td>{{ $value->transaction->date }}</td>
                                         <td>
-                                            @if (strpos($value->transaction->debetAcc->acc_name, "PPh"))
+                                            {{-- {{dd($value->transaction->debetAcc->acc_name)}} --}}
+                                            @if (strpos($value->transaction->debetAcc->acc_name, "PPh") !== false)
                                                 {{ $value->transaction->debetAcc->acc_name }}
-                                            @elseif (strpos($value->transaction->credAcc->acc_name, "PPh"))
+                                            @elseif (strpos($value->transaction->credAcc->acc_name, "PPh") !== false)
                                                 {{ $value->transaction->credAcc->acc_name }}
                                             @endif
                                         </td>
                                         <td>
-                                            @if (strpos($value->transaction->debetAcc->acc_name, "PPh"))
+                                            @if (strpos($value->transaction->debetAcc->acc_name, "PPh") !== false)
                                                 {{ $value->transaction->debetAcc->acc_code }}
-                                            @elseif (strpos($value->transaction->credAcc->acc_name, "PPh"))
+                                            @elseif (strpos($value->transaction->credAcc->acc_name, "PPh") !== false)
                                                 {{ $value->transaction->credAcc->acc_code }}
                                             @endif
                                         </td>
@@ -81,6 +83,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>

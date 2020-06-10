@@ -24,4 +24,9 @@ class GraphController extends Controller
         $graph = new graph;
         return response()->json($graph->showTotalProject());
     }
+
+    public function getTotalProjectRevenue(){
+        $graph = new graph;
+        return response()->json($graph->showTotalProjectRevenue());
+    }
 }
