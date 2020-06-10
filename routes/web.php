@@ -56,6 +56,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('accPayable', 'AccPayableController', ['except' => ['show']]);
 	//piutang
 	Route::resource('accReceivable', 'AccReceivableController', ['except' => ['show']]);
+	//pajak
+	Route::resource('tax', 'TaxController', ['except' => ['show']]);
 
 
 
