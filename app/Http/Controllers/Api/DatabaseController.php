@@ -10,6 +10,8 @@ use GuzzleHttp\Client;
 class DatabaseController extends Controller
 {
     public function export(){
+        $start = microtime(true);
+
         //ENTER THE RELEVANT INFO BELOW
         $mysqlHostName      = env('DB_HOST');
         $mysqlUserName      = env('DB_USERNAME');
@@ -46,7 +48,7 @@ class DatabaseController extends Controller
             //ganti url dengan web kedua
             $client = new Client();
 
-            $result = $client->request('POST', 'http://localhost:8081/api/data/import', [
+            $result = $client->request('POST', 'https://keuangan.fittechinova.com/api/data/import', [
                 'multipart' => [
                     [
                         'name'     => 'file',
@@ -56,6 +58,9 @@ class DatabaseController extends Controller
             ]);
 
             echo $result->getBody();
+
+            $time_elapsed_secs = microtime(true) - $start;
+            $backupDatabase->obfPrint('Lama waktu eksekusi.. '.$time_elapsed_secs.' detik',1);
         }
     }
 }
