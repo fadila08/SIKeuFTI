@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Library\MyBackup\Backup_Database;
 use GuzzleHttp\Client;
+use App\Maintenance;
 
 class DatabaseController extends Controller
 {
     public function export(){
+        $data = Maintenance::first();
+        $data->status = "1";
+        $data->save();
+
         $start = microtime(true);
 
         //ENTER THE RELEVANT INFO BELOW
@@ -48,11 +53,7 @@ class DatabaseController extends Controller
             //ganti url dengan web kedua
             $client = new Client();
 
-<<<<<<< HEAD
-            $result = $client->request('POST', 'http://keuangan.fittechinova.com/api/data/import', [
-=======
             $result = $client->request('POST', 'https://keuangan.fittechinova.com/api/data/import', [
->>>>>>> 4834fbb1dae96b3820ace6f29515703e0b785a21
                 'multipart' => [
                     [
                         'name'     => 'file',
@@ -66,5 +67,8 @@ class DatabaseController extends Controller
             $time_elapsed_secs = microtime(true) - $start;
             $backupDatabase->obfPrint('Lama waktu eksekusi.. '.$time_elapsed_secs.' detik',1);
         }
+        $data = Maintenance::first();
+        $data->status = "0";
+        $data->save();
     }
 }
