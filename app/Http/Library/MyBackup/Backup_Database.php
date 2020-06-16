@@ -1,6 +1,6 @@
 <?php 
 namespace App\Http\Library\MyBackup;
-
+use Exception;
 /**
  * This file contains the Backup_Database class wich performs
  * a partial or complete backup of any given MySQL database

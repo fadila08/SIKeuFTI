@@ -1,6 +1,6 @@
 <?php 
 namespace App\Http\Library\MyBackup;
-
+use Exception;
 /**
  * This file contains the Restore_Database class wich performs
  * a partial or complete restoration of any given MySQL database
