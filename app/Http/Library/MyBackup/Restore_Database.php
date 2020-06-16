@@ -1,6 +1,6 @@
 <?php 
 namespace App\Http\Library\MyBackup;
-
+use Exception;
 /**
  * This file contains the Restore_Database class wich performs
  * a partial or complete restoration of any given MySQL database
@@ -8,16 +8,7 @@ namespace App\Http\Library\MyBackup;
  * @version 1.0
  */
 
-/**
- * Define database parameters here
- */
-// define("DB_USER", 'root');
-// define("DB_PASSWORD", '');
-// define("DB_NAME", 'db_sikeufti_2');
-// define("DB_HOST", 'localhost');
-// define("BACKUP_DIR", '.'); // Comment this line to use same script's directory ('.')
-// define("BACKUP_FILE", 'myphp-backup-db_sikeufti-.sql'); // Script will autodetect if backup file is gzipped based on .gz extension
-// define("CHARSET", 'utf8');
+
 define("DISABLE_FOREIGN_KEY_CHECKS", true); // Set to true if you are having foreign key constraint fails
 
 /**
