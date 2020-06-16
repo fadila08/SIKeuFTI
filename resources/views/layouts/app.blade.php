@@ -31,6 +31,20 @@
             @yield('content')
         </div>
 
+        <!-- notif service -->
+        <div class="modal fade" id="notifikasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Pemberitahuan</h5>
+                    </div>
+                    <div class="modal-body">
+                        Sedang ada pembaruan data, mohon tunggu
+                    </div>
+                </div>
+            </div>
+        </div>
+
         @guest()
             @include('layouts.footers.guest')
         @endguest

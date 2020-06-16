@@ -46,7 +46,7 @@ class DatabaseController extends Controller
             //ganti url dengan web kedua
             $client = new Client();
 
-            $result = $client->request('POST', 'http://localhost:8081/api/data/import', [
+            $result = $client->request('POST', 'http://keuangan.fittechinova.com/api/data/import', [
                 'multipart' => [
                     [
                         'name'     => 'file',
