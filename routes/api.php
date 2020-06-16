@@ -21,3 +21,4 @@ Route::get('/totalrevenue','Api\GraphController@getTotalRevenue');
 Route::get('/totalproject','Api\GraphController@getTotalProject');
 Route::get('/totalprojectrevenue','Api\GraphController@getTotalProjectRevenue');
 Route::get('/data/export','Api\DatabaseController@export');
+Route::get('/maintenance/check','Api\MaintenanceController@check');
