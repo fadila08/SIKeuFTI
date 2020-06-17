@@ -39,7 +39,7 @@ class otherTransactionController extends Controller
         $myLog = new myLog;
 
         //insert to jurnal umum
-        $proof = $request->file('upload_proof')->store('proof_transactions'); 
+        $proof = $request->file('upload_proof')->storeAs('proof_transactions', $request->proof_num.'.jpeg'); 
 
         //di exclude dulu upload proofnya
         $data = $request->merge(['nominal' => Crypt::encryptString($request->get('nominal'))])->except('upload_proof');
