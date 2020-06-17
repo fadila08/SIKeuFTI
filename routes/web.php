@@ -64,6 +64,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('contractAR', 'ContractARController', ['except' => ['show']]);
 	//Pendapatan proyek
 	Route::resource('projectRevenue', 'ProjectRevenueController', ['except' => ['show']]);
+	//Backup and Recovery
+	Route::get('backupRecovery/index', 'backupRecoveryController@index')->name('indexBackupRecovery');
+	Route::get('backupRecovery/recover', 'backupRecoveryController@recover')->name('recoverBackupRecovery');
+	Route::get('backupRecovery/download', 'backupRecoveryController@download')->name('downloadBackupRecovery');
 
 
 

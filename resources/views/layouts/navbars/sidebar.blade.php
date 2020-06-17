@@ -262,6 +262,17 @@
 
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('indexBackupRecovery') }}">
+                        <i class="ni ni-folder-17 text-primary-fti"></i> {{ __('Backup & Recovery') }}
+                    </a>
+                </li>        
+            </ul>
+
+            <!-- Divider -->
+            <hr class="my-3">
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples4" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples4">
                         <i class="ni ni-settings text-primary-fti"></i>
                         <span class="nav-link-text" style="color: rgba(0, 0, 0, .5);">{{ __('Kelola Akun') }}</span>
