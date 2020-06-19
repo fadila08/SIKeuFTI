@@ -228,6 +228,11 @@
                     <div class="collapse show" id="navbar-examples3">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('financialStatement') }}">
+                                    {{ __('Generate Laporan Keuangan') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}">
                                     {{ __('Laporan Laba Rugi') }}
                                 </a>
@@ -245,11 +250,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}">
                                     {{ __('Arus Kas') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
-                                    {{ __('Unduh Laporan Keuangan') }}
                                 </a>
                             </li>
                         </ul>
