@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTrialBalancesTable extends Migration
+class CreateProfitLossTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateTrialBalancesTable extends Migration
      */
     public function up()
     {
-        Schema::create('trial_balances', function (Blueprint $table) {
+        Schema::create('profit_loss', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('period');
-            $table->unsignedBigInteger('id_coa');
-            $table->unsignedBigInteger('id_ledger');
+            $table->string('acc_revenue');
+            $table->string('total_revenue');
+            $table->string('acc_charge');
+            $table->string('total_charge');
+            $table->string('net_income');
             $table->timestamps();
-
-            $table->foreign('id_coa')->references('id')->on('coas');
-            $table->foreign('id_ledger')->references('id')->on('ledgers');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateTrialBalancesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trial_balances');
+        Schema::dropIfExists('profit_loss');
     }
 }
