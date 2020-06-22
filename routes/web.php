@@ -72,7 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('financialStatement/index', 'FinancialStatementController@index')->name('financialStatement');
 	Route::get('financialStatement/create', 'FinancialStatementController@create')->name('generateStatement');
 	//laporan laba rugi
-	// Route::resource('profitLoss', 'ProfitLossController', ['except' => ['show']]);
+	Route::resource('profitLoss', 'ProfitLossController', ['except' => ['show']]);
 	//Generate laporan perubahan ekuitas
 	// Route::resource('changeEquity', 'ChangeEquityController', ['except' => ['show']]);
 	//Generate laporan neraca

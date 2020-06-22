@@ -233,7 +233,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('profitLoss.index') }}">
                                     {{ __('Laporan Laba Rugi') }}
                                 </a>
                             </li>
