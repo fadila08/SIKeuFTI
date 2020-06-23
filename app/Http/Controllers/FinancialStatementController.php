@@ -30,6 +30,8 @@ class FinancialStatementController extends Controller
 
     public function create()
     {
+        $myLog = new myLog;
+
         //insert to laba rugi
         //select neraca saldo where id_coa == akun pendapatan usaha [array]
         $acc_pendapatan = Trial_balance::with(['coa'])->whereHas('coa', function (Builder $query) {
@@ -109,7 +111,9 @@ class FinancialStatementController extends Controller
                                     'updated_at' => Carbon::now()
                                 );
         
-        DB::table('profit_loss')->insert($data_profitloss);                
+        DB::table('profit_loss')->insert($data_profitloss);
+        
+        $myLog->go('store','',\json_encode($data_profitloss),'profit_loss');
         
         //insert to perubahan ekuitas
         //select neraca saldo where id_coa == akun modal && where period == current year
@@ -180,7 +184,9 @@ class FinancialStatementController extends Controller
                                     'updated_at' => Carbon::now()
                                     );
         
-        DB::table('change_equity')->insert($data_change_equity);                
+        DB::table('change_equity')->insert($data_change_equity);  
+        
+        $myLog->go('store','',\json_encode($data_change_equity),'change_equity');
 
         //insert to neraca
         //select neraca saldo where id coa == akun aset lancar (AL) && current year
@@ -343,7 +349,9 @@ class FinancialStatementController extends Controller
                                     'updated_at' => Carbon::now()                         
                                     );
 
-        DB::table('balance_sheets')->insert($data_balance_sheet);                
+        DB::table('balance_sheets')->insert($data_balance_sheet);
+        
+        $myLog->go('store','',\json_encode($data_balance_sheet),'balance_sheets');
 
         //insert to arus kas
         //get kas pada tabel arus kas tahun sebelumnya
@@ -408,7 +416,9 @@ class FinancialStatementController extends Controller
                                 'updated_at' => Carbon::now()
                                 );
 
-        DB::table('cash_flows')->insert($data_cash_flow);                
+        DB::table('cash_flows')->insert($data_cash_flow);  
+        
+        $myLog->go('store','',\json_encode($data_cash_flow),'cash_flows');
 
         // dd($data_cash_flow);
         

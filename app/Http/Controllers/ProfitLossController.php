@@ -24,8 +24,8 @@ class ProfitLossController extends Controller
         $data['profitLos'] = Profit_loss::get()->groupBy('period'); 
         $data['trialBalance'] = Trial_balance::get(); 
 
-        // $myLog = new myLog;
-        // $myLog->go('show','','','general_ledgers');
+        $myLog = new myLog;
+        $myLog->go('show','','','profit_loss');
 
         return view('profitLoss.index', $data);
     }
@@ -35,13 +35,8 @@ class ProfitLossController extends Controller
         $data['profitLos'] = Profit_loss::get()->groupBy('period'); 
         $data['trialBalance'] = Trial_balance::get(); 
 
-        // $myLog = new myLog;
-        // $myLog->go('show','','','general_ledgers');
-
         set_time_limit(2020);
         $pdf = PDF::loadView('profitLoss.print', $data);
         return $pdf->download('profitLoss_.'.date('Y-m-d_H:i:s').'.pdf');
-
-        // return view('profitLoss.index', $data);
     }
 }

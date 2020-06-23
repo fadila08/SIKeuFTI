@@ -24,8 +24,8 @@ class BalanceSheetController extends Controller
         $data['balanceSheet'] = Balance_sheet::get()->groupBy('period'); 
         $data['trialBalance'] = Trial_balance::get(); 
 
-        // $myLog = new myLog;
-        // $myLog->go('show','','','general_ledgers');
+        $myLog = new myLog;
+        $myLog->go('show','','','balance_sheets');
 
         return view('balanceSheets.index', $data);
     }
@@ -35,13 +35,8 @@ class BalanceSheetController extends Controller
         $data['balanceSheet'] = Balance_sheet::get()->groupBy('period'); 
         $data['trialBalance'] = Trial_balance::get(); 
 
-        // $myLog = new myLog;
-        // $myLog->go('show','','','general_ledgers');
-
         set_time_limit(2020);
         $pdf = PDF::loadView('balanceSheets.print', $data);
         return $pdf->download('balanceSheets_.'.date('Y-m-d_H:i:s').'.pdf');
-
-        // return view('profitLoss.index', $data);
     }
 }
