@@ -222,7 +222,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples3">
-                        <i class="ni ni-book-bookmark" style="color: #f4645f;"></i>
+                        <i class="ni ni-book-bookmark text-primary-fti"></i>
                         <span class="nav-link-text" style="color: rgba(0, 0, 0, .5);">{{ __('Laporan Keuangan') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-examples3">
@@ -248,7 +248,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('cashFlow.index') }}">
                                     {{ __('Arus Kas') }}
                                 </a>
                             </li>
