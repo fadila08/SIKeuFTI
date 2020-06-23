@@ -76,7 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//Generate laporan perubahan ekuitas
 	Route::resource('changeEquity', 'ChangeEquityController', ['except' => ['show']]);
 	//Generate laporan neraca
-	// Route::resource('balanceSheet', 'BalanceSheetController', ['except' => ['show']]);
+	Route::resource('balanceSheet', 'BalanceSheetController', ['except' => ['show']]);
 	//Generate laporan arus kas
 	// Route::resource('cashFlow', 'CashFlowController', ['except' => ['show']]);
 
