@@ -76,10 +76,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profitLoss/print', 'ProfitLossController@print');
 	//Generate laporan perubahan ekuitas
 	Route::resource('changeEquity', 'ChangeEquityController', ['except' => ['show']]);
+	Route::get('changeEquity/print', 'ChangeEquityController@print');
 	//Generate laporan neraca
 	Route::resource('balanceSheet', 'BalanceSheetController', ['except' => ['show']]);
+	Route::get('balanceSheet/print', 'BalanceSheetController@print');
 	//Generate laporan arus kas
 	Route::resource('cashFlow', 'CashFlowController', ['except' => ['show']]);
+	Route::get('cashFlow/print', 'CashFlowController@print');
 
 });
 
