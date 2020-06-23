@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//laporan laba rugi
 	Route::resource('profitLoss', 'ProfitLossController', ['except' => ['show']]);
 	//Generate laporan perubahan ekuitas
-	// Route::resource('changeEquity', 'ChangeEquityController', ['except' => ['show']]);
+	Route::resource('changeEquity', 'ChangeEquityController', ['except' => ['show']]);
 	//Generate laporan neraca
 	// Route::resource('balanceSheet', 'BalanceSheetController', ['except' => ['show']]);
 	//Generate laporan arus kas

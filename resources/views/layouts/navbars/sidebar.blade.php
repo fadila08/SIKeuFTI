@@ -238,7 +238,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('changeEquity.index') }}">
                                     {{ __('Laporan Perubahan Ekuitas') }}
                                 </a>
                             </li>

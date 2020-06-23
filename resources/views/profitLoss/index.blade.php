@@ -19,10 +19,13 @@
                     </div>
                     
                     @foreach ($profitLos as $key => $value)
+                        <div class="col-12 text-right">
+                            <input type="button" value="Print" class="btn btn-primary my-2 btn-sm" onclick="window.print()" /> 
+                        </div>
                         <h4 class="mb-0 ml-3" style="font-weight:bold ;text-align: center" >{{ __('LAPORAN LABA RUGI') }}</h4>
                         <h4 class="mb-0 ml-3" style="font-weight:bold ;text-align: center">{{ __('CV. FIT TECH INOVA GLOBAL') }}</h4>
                         <h4 class="mb-0 ml-3" style="font-weight:bold ;text-align: center">{{ __('Periode : ') }} {{ $value[0]->period }}</h4>
-                       
+                        <br>
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush">
                                 @foreach ($value as $item)
