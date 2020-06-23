@@ -20,7 +20,7 @@
                     
                     @foreach ($profitLos as $key => $value)
                         <div class="col-12 text-right">
-                            <input type="button" value="Print" class="btn btn-primary my-2 btn-sm" onclick="window.print()" /> 
+                        <a href="{{url('profitLoss/print')}}" class="btn btn-primary my-2 btn-sm">Print</a>
                         </div>
                         <h4 class="mb-0 ml-3" style="font-weight:bold ;text-align: center" >{{ __('LAPORAN LABA RUGI') }}</h4>
                         <h4 class="mb-0 ml-3" style="font-weight:bold ;text-align: center">{{ __('CV. FIT TECH INOVA GLOBAL') }}</h4>
