@@ -64,8 +64,21 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('contractAR', 'ContractARController', ['except' => ['show']]);
 	//Pendapatan proyek
 	Route::resource('projectRevenue', 'ProjectRevenueController', ['except' => ['show']]);
-
-
+	//Backup and Recovery
+	Route::get('backupRecovery/index', 'backupRecoveryController@index')->name('indexBackupRecovery');
+	Route::get('backupRecovery/recover', 'backupRecoveryController@recover')->name('recoverBackupRecovery');
+	Route::get('backupRecovery/download', 'backupRecoveryController@download')->name('downloadBackupRecovery');
+	//Generate laporan keuangan
+	Route::get('financialStatement/index', 'FinancialStatementController@index')->name('financialStatement');
+	Route::get('financialStatement/create', 'FinancialStatementController@create')->name('generateStatement');
+	//laporan laba rugi
+	Route::resource('profitLoss', 'ProfitLossController', ['except' => ['show']]);
+	//Generate laporan perubahan ekuitas
+	Route::resource('changeEquity', 'ChangeEquityController', ['except' => ['show']]);
+	//Generate laporan neraca
+	Route::resource('balanceSheet', 'BalanceSheetController', ['except' => ['show']]);
+	//Generate laporan arus kas
+	Route::resource('cashFlow', 'CashFlowController', ['except' => ['show']]);
 
 });
 

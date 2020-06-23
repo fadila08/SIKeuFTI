@@ -1,16 +1,46 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Console\Commands;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use App\Http\Library\MyBackup\Backup_Database;
 use GuzzleHttp\Client;
 use App\Maintenance;
 
-class DatabaseController extends Controller
+class DBreplication extends Command
 {
-    public function export(){
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'replicate:db';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'This will replicate db from primary db to secondary db';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
         $data = Maintenance::first();
         $data->status = "1";
         $data->save();

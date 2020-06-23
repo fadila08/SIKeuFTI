@@ -17,7 +17,7 @@
                                 <h3 class="mb-0">List of Accounts Receivable</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                <a href="{{ route('accReceivable.index') }}" class="btn btn-sm btn-primary">See all</a>
                             </div>
                         </div>
                     </div>
@@ -26,45 +26,21 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Nominal</th>
+                                    <th scope="col">Debitur</th>
                                     <th scope="col">Due Date</th>
+                                    <th scope="col">Pay Date</th>
+                                    <th scope="col">Remaining Debt</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/
-                                    </th>
-                                    <td>
-                                        4,569
-                                    </td>
-                                    <td>
-                                        340
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/index.html
-                                    </th>
-                                    <td>
-                                        3,985
-                                    </td>
-                                    <td>
-                                        319
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/charts.html
-                                    </th>
-                                    <td>
-                                        3,513
-                                    </td>
-                                    <td>
-                                        294
-                                    </td>
-                                </tr>
+                                @foreach($accReceivable as $ar)
+                                    <tr>
+                                        <td>{{ $ar->transaction->project->customer->cust_name }}</td>
+                                        <td>{{ $ar->due_date }}</td>
+                                        <td>{{ $ar->pay_date }}</td>
+                                        <td>{{ Crypt::decryptString($ar->remaining_debt) }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -80,7 +56,7 @@
                                 <h3 class="mb-0">List of Accounts Payable</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                <a href="{{ route('accPayable.index') }}" class="btn btn-sm btn-primary">See all</a>
                             </div>
                         </div>
                     </div>
@@ -90,44 +66,20 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Creditor</th>
-                                    <th scope="col">Nominal</th>
                                     <th scope="col">Due Date</th>
+                                    <th scope="col">Pay Date</th>
+                                    <th scope="col">Remaining Debt</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/
-                                    </th>
-                                    <td>
-                                        4,569
-                                    </td>
-                                    <td>
-                                        340
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/index.html
-                                    </th>
-                                    <td>
-                                        3,985
-                                    </td>
-                                    <td>
-                                        319
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/charts.html
-                                    </th>
-                                    <td>
-                                        3,513
-                                    </td>
-                                    <td>
-                                        294
-                                    </td>
-                                </tr>
+                                @foreach($accPayable as $ap)
+                                    <tr>
+                                        <td>{{ $ap->transaction->creditor->cred_name }}</td>
+                                        <td>{{ $ap->due_date }}</td>
+                                        <td>{{ $ap->pay_date }}</td>
+                                        <td>{{ Crypt::decryptString($ap->remaining_debt) }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -146,7 +98,7 @@
                                 <h3 class="mb-0">List of Taxes</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                <a href="{{ route('tax.index') }}" class="btn btn-sm btn-primary">See all</a>
                             </div>
                         </div>
                     </div>
@@ -163,40 +115,27 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($tax as $item)
                                 <tr>
-                                    <th scope="row">
-                                        /argon/
-                                    </th>
                                     <td>
-                                        4,569
+                                        @if (strpos($item->transaction->debetAcc->acc_name, "PPh") !== false)
+                                            {{ $item->transaction->debetAcc->acc_code }}
+                                        @elseif (strpos($item->transaction->credAcc->acc_name, "PPh") !== false)
+                                            {{ $value->transaction->credAcc->acc_code }}
+                                        @endif
                                     </td>
                                     <td>
-                                        340
+                                        @if (strpos($item->transaction->debetAcc->acc_name, "PPh") !== false)
+                                            {{ $item->transaction->debetAcc->acc_name }}
+                                        @elseif (strpos($item->transaction->credAcc->acc_name, "PPh") !== false)
+                                            {{ $item->transaction->credAcc->acc_name }}
+                                        @endif                                    
                                     </td>
-                                    <td>
-                                        46,53%
-                                    </td>
-                                    <td>
-                                        340
-                                    </td>
+                                    <td>{{ $item->transaction->description }}</td>
+                                    <td>{{ Crypt::decryptString($item->transaction->nominal) }}</td>
+                                    <td>{{ $item->due_date }}</td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">
-                                        /argon/index.html
-                                    </th>
-                                    <td>
-                                        3,985
-                                    </td>
-                                    <td>
-                                        319
-                                    </td>
-                                    <td>
-                                        46,53%
-                                    </td>
-                                    <td>
-                                        319
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -204,10 +143,10 @@
             </div>
         </div>
         
-        <!-- kolom ketiga -->
-        <div class="row mt-5">
+        <!-- kolom ketiga (USED) -->
+        <!-- <div class="row mt-5"> -->
                     <!-- grafik cash flow -->
-                    <div class="col-xl-12 mb-5 mb-xl-0">
+                    <!-- <div class="col-xl-12 mb-5 mb-xl-0">
                 <div class="card bg-gradient-default shadow">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
@@ -233,21 +172,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body"> -->
                         <!-- Chart -->
-                        <div class="chart">
+                        <!-- <div class="chart"> -->
                             <!-- Chart wrapper -->
-                            <canvas id="cash-flow" class="chart-canvas"></canvas>
+                            <!-- <canvas id="cash-flow" class="chart-canvas"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- kolom keempat -->
         <div class="row mt-5">
             <!-- grafik total revenue -->
-            <div class="col-xl-8 mb-5 mb-xl-0">
+            <div class="col-xl-12 mb-5 mb-xl-0">
                 <div class="card bg-gradient-default shadow">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
@@ -282,9 +221,12 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <!-- kolom keempat.2 -->
+        <div class="row mt-5">
             <!-- Grafik performa proyek -->
-            <div class="col-xl-4">
+            <div class="col-xl-12 mb-5 mb-xl-0">
                 <div class="card shadow">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
@@ -317,13 +259,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>        
         </div>
 
-        <!-- kolom kelima -->
-        <div class="row mt-5">
+        <!-- kolom kelima (USED) -->
+        <!-- <div class="row mt-5"> -->
             <!-- Grafik performa revenue / pendapatan -->
-            <div class="col-xl-4">
+            <!-- <div class="col-xl-4">
                 <div class="card shadow">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
@@ -333,17 +275,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body"> -->
                         <!-- Chart -->
-                        <div class="chart">
+                        <!-- <div class="chart">
                             <canvas id="chart-profitlost" class="chart-canvas"></canvas>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- grafik Changes in Equity -->
-            <div class="col-xl-8 mb-5 mb-xl-0">
+            <!-- <div class="col-xl-8 mb-5 mb-xl-0">
                 <div class="card bg-gradient-default shadow">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
@@ -369,21 +311,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body"> -->
                         <!-- Chart -->
-                        <div class="chart">
+                        <!-- <div class="chart"> -->
                             <!-- Chart wrapper -->
-                            <canvas id="changes-in-equity" class="chart-canvas"></canvas>
+                            <!-- <canvas id="changes-in-equity" class="chart-canvas"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- kolom keenam -->
-        <div class="row mt-5">
+        <!-- <div class="row mt-5"> -->
             <!-- grafik total aset -->
-            <div class="col-xl-8 mb-5 mb-xl-0">
+            <!-- <div class="col-xl-8 mb-5 mb-xl-0">
                 <div class="card bg-gradient-default shadow">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
@@ -409,18 +351,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body"> -->
                         <!-- Chart -->
-                        <div class="chart">
+                        <!-- <div class="chart"> -->
                             <!-- Chart wrapper -->
-                            <canvas id="total-aset" class="chart-canvas"></canvas>
+                            <!-- <canvas id="total-aset" class="chart-canvas"></canvas>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Grafik projects revenue -->
-            <div class="col-xl-4">
+            <!-- <div class="col-xl-4">
                 <div class="card shadow">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
@@ -430,15 +372,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body"> -->
                         <!-- Chart -->
-                        <div class="chart">
+                        <!-- <div class="chart">
                             <canvas id="chart-projectsRevenue" class="chart-canvas"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- TEMPLATE AWAL -->
         <!-- kolom pertama -->

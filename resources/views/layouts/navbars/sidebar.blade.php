@@ -222,34 +222,34 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples3">
-                        <i class="ni ni-book-bookmark" style="color: #f4645f;"></i>
+                        <i class="ni ni-book-bookmark text-primary-fti"></i>
                         <span class="nav-link-text" style="color: rgba(0, 0, 0, .5);">{{ __('Laporan Keuangan') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-examples3">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('financialStatement') }}">
+                                    {{ __('Generate Laporan Keuangan') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('profitLoss.index') }}">
                                     {{ __('Laporan Laba Rugi') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('changeEquity.index') }}">
                                     {{ __('Laporan Perubahan Ekuitas') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('balanceSheet.index') }}">
                                     {{ __('Neraca') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
+                                <a class="nav-link" href="{{ route('cashFlow.index') }}">
                                     {{ __('Arus Kas') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home') }}">
-                                    {{ __('Unduh Laporan Keuangan') }}
                                 </a>
                             </li>
                         </ul>
@@ -257,6 +257,17 @@
                 </li>
             </ul>
             
+            <!-- Divider -->
+            <hr class="my-3">
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('indexBackupRecovery') }}">
+                        <i class="ni ni-folder-17 text-primary-fti"></i> {{ __('Backup & Recovery') }}
+                    </a>
+                </li>        
+            </ul>
+
             <!-- Divider -->
             <hr class="my-3">
 
